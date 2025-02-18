@@ -1,37 +1,43 @@
+/* Estilos generales */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    height: 100vh; /* Asegura que el body ocupe toda la altura de la ventana */
-    display: flex;
-    justify-content: center;
-    align-items: center;
+}
+
+/* Estilos para la página de presentación */
+.index {
     position: relative; /* Necesario para el posicionamiento del pseudo-elemento */
+    height: 100vh; /* Asegura que el body ocupe toda la altura de la ventana */
     overflow: hidden; /* Evita el desbordamiento */
     background-image: url('background.jpeg'); /* Cambia esto por la ruta de tu imagen */
     background-size: cover; /* Asegura que la imagen cubra toda la pantalla */
     background-position: center; /* Centra la imagen */
 }
-
-.presentation {
-    text-align: center;
-    position: relative; /* Necesario para el posicionamiento del pseudo-elemento */
-    z-index: 1; /* Asegura que el contenido esté por encima de la imagen de fondo */
-}
-
-/* Agregar una capa oscura sobre la imagen de fondo */
-body::after {
+/* Estilo para la imagen de fondo */
+.index::before {
     content: "";
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5); /* Color negro con 50% de opacidad */
-    z-index: 0; /* Asegura que la capa oscura esté detrás del contenido */
+    background-color: rgba(0,0,0,0.5); /* Ajusta la opacidad para hacerla menos brillante */
+    z-index: 1; /* Asegura que la imagen esté detrás del contenido */
 }
 
-h1 {
+.presentation {
+    text-align: center;
+    height: 100%; /* Ocupa toda la altura del contenedor */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centra verticalmente */
+    align-items: center; /* Centra horizontalmente */
+    position: relative; /* Necesario para el posicionamiento del contenido */
+    z-index: 1; /* Asegura que el contenido esté por encima de la imagen de fondo */
+}
+
+.index h1 {
     font-size: 3em; /* Tamaño de fuente más grande */
     color: #FFCC00; /* Color amarillo solar */
     text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7); /* Sombra del texto */
@@ -48,13 +54,14 @@ h1 {
     }
 }
 
-.legend {
+.index .legend {
     margin: 20px 0;
-    color: #333333; /* Color del texto */
+    color: #ffffff; /* Color del texto */
     font-size: 1.2em; /* Tamaño de fuente más grande */
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5); /* Sombra del texto */
 }
 
-.button {
+.index .button {
     display: inline-block;
     padding: 10px 20px;
     background: linear-gradient(45deg, #66CC66, #0099CC); /* Gradiente de fondo */
@@ -67,20 +74,58 @@ h1 {
     transition: transform 0.3s, box-shadow 0.3s; /* Transiciones suaves */
 }
 
-.button:hover {
+.index .button:hover {
     transform: translateY(-3px); /* Efecto de elevación al pasar el mouse */
     box-shadow: 0 8px 25px rgba(0, 123, 255, 0.7); /* Sombra más intensa al pasar el mouse */
 }
-
-.button:active {
+.index .button:active {
     transform: translateY(0); /* Regresa a la posición original al hacer clic */
 }
-.legend {
-    margin: 20px 0;
-    color: #ffffff; /* Cambia el color del texto a blanco para mayor contraste */
-    font-size: 1.2em; /* Tamaño de fuente más grande */
-    background-color: rgba(0, 0, 0, 0.6); /* Fondo negro semitransparente */
-    padding: 10px; /* Espaciado interno */
-    border-radius: 5px; /* Bordes redondeados */
 
+
+/* Estilos para la página de inicio */
+.home {
+    background-color: #F0F0F0; /* Fondo claro para la página de inicio */
 }
+
+.header {
+    display: flex;
+    justify-content: space-between; /* Espacio entre el logo y el menú */
+    align-items: center; /* Centra verticalmente */
+    padding: 20px;
+    background-color: #0099CC; /* Color de fondo del encabezado */
+}
+
+.home .logo img {
+    max-width: 100px; /* Ajusta el tamaño del logotipo */
+}
+
+.menu {
+    display: flex; /* Muestra los elementos del menú en línea */
+    gap: 20px; /* Espacio entre los botones */
+}
+
+.menu-item {
+    color: #FFFFFF; /* Color del texto de los botones */
+    text-decoration: none; /* Sin subrayado */
+    padding: 10px 15px; /* Espaciado interno */
+    border-radius: 5px; /* Bordes redondeados */
+    transition: background-color 0.3s; /* Transición suave para el fondo */
+}
+
+.menu-item:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* Fondo al pasar el mouse */
+}
+
+main {
+    padding: 20px; /* Espaciado interno para el contenido principal */
+}
+
+section {
+    margin: 20px 0; /* Espacio entre secciones */
+    padding: 20px;
+    background-color: #FFFFFF; /* Fondo blanco para las secciones */
+    border-radius: 5px; /* Bordes redondeados */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra para las secciones */
+}
+

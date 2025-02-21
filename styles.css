@@ -128,13 +128,3 @@ section {
     border-radius: 5px; /* Bordes redondeados */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra para las secciones */
 }
-
-#drop-area {
-    border: 2px dashed #ccc;
-    border-radius: 20px;
-    width: auto;
-    height: 200px;
-    text-align: center;
-    padding: 20px;
-    margin: 20px auto;
-}

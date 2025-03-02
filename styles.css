@@ -96,7 +96,7 @@ body {
     background-color: #0099CC; /* Color de fondo del encabezado */
 }
 
-.home .logo img {
+.logo img {
     max-width: 100px; /* Ajusta el tamaño del logotipo */
 }
 
@@ -127,4 +127,113 @@ section {
     background-color: #FFFFFF; /* Fondo blanco para las secciones */
     border-radius: 5px; /* Bordes redondeados */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra para las secciones */
+}
+
+.drop-area {
+    border: 2px dashed #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    color: #333;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.drop-area:hover {
+    background-color: #e9e9e9;
+}
+
+.drop-area.dragover {
+    background-color: #e0e0e0;
+}
+
+.drop-area p {
+    margin: 0;
+    font-size: 16px;
+}
+
+#file-list {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 10px;
+}
+
+#file-list li {
+    background-color: #f1f1f1;
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 5px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+}
+
+#uploadButton, #clearButton {
+    display: block;
+    margin: 10px auto;
+    padding: 10px 20px;
+    background-color: #0099CC;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#uploadButton:hover, #clearButton:hover {
+    background-color: #0077AA;
+}
+
+#intro-section {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+#intro-section .left, #intro-section .right {
+    flex: 1;
+    padding: 20px;
+}
+
+#intro-section .left img {
+    max-width: 100%;
+    border-radius: 10px;
+}
+
+#features-section {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+#features-section .feature {
+    flex: 1 1 20%;
+    text-align: center;
+    margin: 10px;
+}
+
+#features-section .feature img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    transition: transform 0.3s;
+}
+
+#features-section .feature img:hover {
+    transform: scale(1.1);
+}
+
+#features-section .feature h3 {
+    margin-top: 10px;
+    font-size: 1.2em;
+    color: #333; /* Color del texto */
+    text-transform: uppercase; /* Texto en mayúsculas */
+    font-weight: bold; /* Texto en negrita */
+    transition: color 0.3s; /* Transición suave para el color */
+    text-decoration: none; /* Elimina el subrayado */
+}
+
+#features-section .feature h3:hover {
+    color: #0099CC; /* Color del texto al pasar el mouse */
 }

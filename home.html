@@ -5,46 +5,57 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
     <title>Página de Inicio - Ahorro Solar</title>
+
 </head>
 <body class="home"> <!-- Clase específica para la página de inicio -->
     <header class="header">
         <div class="logo">
-            <img src="logotipo.jpg" alt="Logotipo" /> <!-- Cambia esto por la ruta de tu logotipo -->
+            <img src="logotipo.jpg" alt="Logotipo" />
         </div>
         <nav class="menu">
-            <a href="#tareas" class="menu-item">Tareas</a>
+            <a href="#ayuda" class="menu-item">Ayuda</a>
+            <a href="#estaciones" class="menu-item">Estaciones</a>
+            <a href="#compras" class="menu-item">Compras</a>
             <a href="#calculadora" class="menu-item">Calculadora</a>
-            <a href="#calculos" class="menu-item">Cálculos</a>
-            <a href="#presupuestado" class="menu-item">Presupuestado</a>
-            <a href="#estadistica_descriptiva" class="menu-item">Estadisticas</a>
         </nav>
     </header>
 
     <main>
-        <section id="tareas">
-            <h2>Tareas</h2>
-            <p>Aquí se presentarán las tareas relacionadas con el ahorro solar.</p>
+        <section id="intro-section" class="intro-section">
+            <div class="left">
+                <img src="intro-image.jpg" alt="Imagen descriptiva">
+            </div>
+            <div class="right">
+                <h2>¿Quiénes somos?</h2>
+                <p>Texto descriptivo sobre el ahorro solar y sus beneficios.</p>
+            </div>
         </section>
-        <section id="calculadora">
-            <h2>Calculadora</h2>
-            <p>Aquí se podrá calcular el promedio de gastos anuales en luz eléctrica.</p>
-        </section>
-        <section id="calculos">
-            <h2>Cálculos</h2>
-            <p>Aquí se presentarán predicciones a futuro de gastos.</p>
-        </section>
-        <section id="presupuestado">
-            <h2>Presupuestado</h2>
-            <p>Aquí se recomendarán modelos y marcas de paneles solares.</p>
-        </section>
-        <section id="estadistica_descriptiva">
-            <h2>Estaditica descriptiva</h2>
-            <p>Aqui se podran adjuntar archivos desde otra ventana</p>
-
+        <section id="features-section" class="features-section">
+            <div id="feature-clima" class="feature">
+                <a href="clima.html">
+                    <img src="logotipo.jpg" alt="Clima">
+                    <h3>Clima</h3>
+                </a>
+            </div>
+            <div id="feature-calculadora" class="feature">
+                <a href="calculadora.html">
+                    <img src="logotipo.jpg" alt="Calculadora">
+                    <h3>Calculadora</h3>
+                </a>
+            </div>
+            <div id="feature-cotizacion" class="feature">
+                <a href="cotizacion.html">
+                    <img src="logotipo.jpg" alt="Cotización">
+                    <h3>Cotización</h3>
+                </a>
+            </div>
+            <div id="feature-radiacion-solar" class="feature">
+                <a href="radiacion_solar.html">
+                    <img src="logotipo.jpg" alt="Radiación Solar">
+                    <h3>Radiación Solar</h3>
+                </a>
+            </div>
         </section>
     </main>
-
-
 </body>
-
 </html>

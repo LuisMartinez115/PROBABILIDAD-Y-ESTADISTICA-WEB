@@ -60,8 +60,14 @@ function reloadFile() {
     document.getElementById('dropArea').style.display = 'flex';
     document.getElementById('fileInfo').style.display = 'none';
     document.getElementById('calculationOptions').style.display = 'none';
+    document.getElementById('showCalcOptionsBtn').style.display = 'inline-block';
     document.getElementById('fileInput').value = '';
     parsedData = [];
+}
+
+function showCalculationOptions() {
+    document.getElementById('calculationOptions').style.display = 'block';
+    document.getElementById('showCalcOptionsBtn').style.display = 'none';
 }
 
 function getSelectedData() {

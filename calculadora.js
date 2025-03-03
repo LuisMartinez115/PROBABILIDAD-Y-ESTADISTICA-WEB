@@ -3,6 +3,7 @@ document.getElementById('dropArea').addEventListener('drop', handleDrop);
 document.getElementById('dropArea').addEventListener('dragover', (e) => e.preventDefault());
 document.getElementById('dropArea').addEventListener('click', () => document.getElementById('fileInput').click());
 document.getElementById('reloadBtn').addEventListener('click', reloadFile);
+document.getElementById('showCalcOptionsBtn').addEventListener('click', showCalculationOptions);
 
 let parsedData = [];
 
@@ -53,7 +54,7 @@ function parseCSV(data) {
 function displayFileInfo(file) {
     document.getElementById('dropArea').style.display = 'none';
     document.getElementById('fileInfo').style.display = 'block';
-    document.getElementById('fileName').textContent = `Loaded file: ${file.name}`;
+    document.getElementById('fileName').textContent = `Archivo cargado: ${file.name}`;
 }
 
 function reloadFile() {
@@ -88,7 +89,7 @@ function getSelectedData() {
 function calculateMean() {
     const data = getSelectedData().flat();
     const mean = data.reduce((a, b) => a + b, 0) / data.length;
-    alert(`Mean: ${mean}`);
+    alert(`Media: ${mean}`);
 }
 
 function calculateMode() {
@@ -96,21 +97,21 @@ function calculateMode() {
     const frequency = {};
     data.forEach(value => frequency[value] = (frequency[value] || 0) + 1);
     const mode = Object.keys(frequency).reduce((a, b) => frequency[a] > frequency[b] ? a : b);
-    alert(`Mode: ${mode}`);
+    alert(`Moda: ${mode}`);
 }
 
 function calculateMedian() {
     const data = getSelectedData().flat().sort((a, b) => a - b);
     const mid = Math.floor(data.length / 2);
     const median = data.length % 2 !== 0 ? data[mid] : (data[mid - 1] + data[mid]) / 2;
-    alert(`Median: ${median}`);
+    alert(`Mediana: ${median}`);
 }
 
 function calculateVariance() {
     const data = getSelectedData().flat();
     const mean = data.reduce((a, b) => a + b, 0) / data.length;
     const variance = data.reduce((a, b) => a + Math.pow(b - mean, 2), 0) / data.length;
-    alert(`Variance: ${variance}`);
+    alert(`Varianza: ${variance}`);
 }
 
 function calculateStdDev() {
@@ -118,9 +119,9 @@ function calculateStdDev() {
     const mean = data.reduce((a, b) => a + b, 0) / data.length;
     const variance = data.reduce((a, b) => a + Math.pow(b - mean, 2), 0) / data.length;
     const stdDev = Math.sqrt(variance);
-    alert(`Standard Deviation: ${stdDev}`);
+    alert(`Desviación Estándar: ${stdDev}`);
 }
 
 function showLoadedData() {
-    console.log('Loaded Data:', parsedData);
+    console.log('Datos cargados:', parsedData);
 }

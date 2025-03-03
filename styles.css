@@ -84,6 +84,9 @@ body {
 
 
 /* Estilos para la página de inicio */
+a{
+    text-decoration: none;
+}
 .home {
     background-color: #F0F0F0; /* Fondo claro para la página de inicio */
 }
@@ -275,7 +278,7 @@ section {
 }
 
 #dropArea, #map {
-    height: 600px;
+    height: 500px; /* Adjust map height */
     width: 100%; 
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
@@ -307,7 +310,17 @@ section {
 .footer {
     text-align: center;
     padding: 10px 0;
-    background-color: #f8f8f8;
+    background-color: #000; /* Black background */
+    color: #fff; /* White text */
+    border-top: 1px solid #ddd;
+    margin-top: 20px;
+}
+
+#footer-home, #footer-calculadora, #footer-radiacion {
+    text-align: center;
+    padding: 10px 0;
+    background-color: #000; /* Black background */
+    color: #fff; /* White text */
     border-top: 1px solid #ddd;
     margin-top: 20px;
 }
@@ -384,4 +397,8 @@ section {
 
 .calculation-options button:hover {
     background-color: #0077AA;
+}
+
+h1 {
+    text-align: center; /* Center the title */
 }

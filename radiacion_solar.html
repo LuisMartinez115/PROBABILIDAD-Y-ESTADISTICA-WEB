@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mapa de Radiación Solar (Demo)</title>
+    <title>Radiación Solar</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="styles.css">
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -23,15 +23,16 @@
     </header>
 
     <main id="main-radiacion">
-        <h2 style="text-align: center;">Radiación Solar (Datos de Demostración)</h2>
-        <div id="map"></div>
-        <div style="margin-top: 10px; text-align: center; font-size: 14px; color: #666;">
-            Haz clic en cualquier punto del mapa para obtener datos de radiación solar simulados
+        <h1 style="text-align: center;">Radiación Solar</h1>
+        <div id="map" style="height: 500px;"></div>
+        <div id="solarRadiationInfo" class="info" style="display: none;">
+            <h2>Información de Radiación Solar</h2>
+            <p id="radiationData"></p>
         </div>
     </main>
 
     <footer id="footer-radiacion" class="footer">
-        <p>&copy; 2023 Tu Empresa. Todos los derechos reservados.</p>
+        <p>Gracias por visitar nuestra página, quejas de errores al correo 2337979h@umich.mx</p>
     </footer>
 
     <script src="radiacion_solar.js"></script>

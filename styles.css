@@ -148,14 +148,12 @@ section {
     transition: background-color 0.3s ease;
     width: 300px;
     height: 200px;
-    margin: 0 auto;
+    margin: 20px auto; /* Center the drop area and add margin */
     display: flex;
     align-items: center;
     justify-content: center;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    max-width: 90%; /* Ensure it doesn't exceed the page width */
+    max-height: 90vh; /* Ensure it doesn't exceed the viewport height */
 }
 
 .drop-area:hover {
@@ -399,6 +397,113 @@ section {
     background-color: #0077AA;
 }
 
+.weather-section {
+    margin: 20px 0;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+.weather-section h2 {
+    margin-top: 0;
+}
+
+.weather-info {
+    margin-top: 10px;
+}
+
+.forecast-item {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #fff;
+}
+
+#loginBox, #formBox, #mapBox {
+    margin: 20px 0;
+}
+
+#coordinatesForm {
+    display: flex;
+    flex-direction: column;
+}
+
+#coordinatesForm label {
+    margin-bottom: 5px;
+}
+
+#coordinatesForm input {
+    margin-bottom: 10px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#coordinatesForm button {
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+
+#coordinatesForm button:hover {
+    background-color: #0056b3;
+}
+
+#loginBox {
+    margin: 20px 0;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    text-align: center;
+}
+
+#loginBox p {
+    margin-bottom: 20px;
+    font-size: 1.2em;
+    color: #333;
+}
+
+#loginBox button {
+    padding: 10px 20px;
+    margin: 0 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s;
+}
+
+#loginBox button:hover {
+    background-color: #0056b3;
+}
+
 h1 {
     text-align: center; /* Center the title */
+}
+
+.forecast-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.forecast-item {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #fff;
+    text-align: center;
+}
+
+#fileInput {
+    display: none; /* Hide the file input by default */
 }

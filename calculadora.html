@@ -26,7 +26,7 @@
         <div id="dropArea" class="drop-area">
             Arrastra y suelta un archivo aquí o haz clic para seleccionar un archivo
         </div>
-        <input type="file" id="fileInput" style="display: none;">
+        <input type="file" id="fileInput" accept=".csv, .xlsx">
         <div id="fileInfo" class="file-info" style="display: none;">
             <p id="fileName"></p>
             <button id="reloadBtn">Cargar otro archivo</button>
@@ -49,6 +49,7 @@
     <footer id="footer-calculadora" class="footer">
         <p>Gracias por visitar nuestra página, quejas de errores al correo 2337979h@umich.mx</p>
     </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
     <script src="calculadora.js"></script>
 </body>
 </html>

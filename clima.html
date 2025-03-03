@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
     <title>Clima - Ahorro Solar</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 </head>
 <body>
     <header class="header">
@@ -22,7 +23,35 @@
 
     <main>
         <h1>Clima</h1>
-        <p>Información sobre el clima y cómo afecta al ahorro solar.</p>
+  
+        <div id="loginBox">
+            <p>¿Conoces tus coordenadas?</p>
+            <button id="yesBtn">Sí</button>
+            <button id="noBtn">No</button>
+        </div>
+        <div id="formBox" style="display: none;">
+            <form id="coordinatesForm">
+                <label for="latitude">Latitud:</label>
+                <input type="text" id="latitude" name="latitude" required>
+                <label for="longitude">Longitud:</label>
+                <input type="text" id="longitude" name="longitude" required>
+                <button type="submit">Obtener Clima</button>
+            </form>
+        </div>
+        <div id="mapBox" style="display: none;">
+            <div id="map" style="height: 500px;"></div>
+        </div>
+        <div id="forecast-weather" class="weather-section" style="display: none;">
+            <h2>Pronóstico del Clima</h2>
+            <div class="forecast-grid">
+                <!-- Información del pronóstico del clima se insertará aquí -->
+            </div>
+        </div>
     </main>
+    <footer class="footer">
+        <p>&copy; 2023 Ahorro Solar. Todos los derechos reservados.</p>
+    </footer>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="clima.js"></script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-document.getElementById('fileInput').addEventListener('change', handleFile);
+document.getElementById('fileInput').addEventListener('change', handleFileSelect);
 document.getElementById('dropArea').addEventListener('drop', handleDrop);
 document.getElementById('dropArea').addEventListener('dragover', (e) => e.preventDefault());
 document.getElementById('dropArea').addEventListener('click', () => document.getElementById('fileInput').click());
@@ -7,17 +7,44 @@ document.getElementById('showCalcOptionsBtn').addEventListener('click', showCalc
 
 let parsedData = [];
 
-function handleFile(event) {
+function handleFileSelect(event) {
     const file = event.target.files[0];
-    parseFile(file);
-    displayFileInfo(file);
+    const reader = new FileReader();
+
+    if (file.name.endsWith('.csv')) {
+        reader.onload = function(e) {
+            const text = e.target.result;
+            processCSV(text, file.name);
+        };
+        reader.readAsText(file);
+    } else if (file.name.endsWith('.xlsx')) {
+        reader.onload = function(e) {
+            const data = new Uint8Array(e.target.result);
+            const workbook = XLSX.read(data, { type: 'array' });
+            const firstSheetName = workbook.SheetNames[0];
+            const worksheet = workbook.Sheets[firstSheetName];
+            const csv = XLSX.utils.sheet_to_csv(worksheet);
+            processCSV(csv, file.name);
+        };
+        reader.readAsArrayBuffer(file);
+    } else {
+        alert('Unsupported file format. Please upload a .csv or .xlsx file.');
+    }
+}
+
+function processCSV(csv, fileName) {
+    // Process the CSV data
+    console.log(csv);
+    // Add your CSV processing logic here
+    parsedData = parseCSV(csv);
+    displayFileInfo(fileName);
 }
 
 function handleDrop(event) {
     event.preventDefault();
     const file = event.dataTransfer.files[0];
     parseFile(file);
-    displayFileInfo(file);
+    displayFileInfo(file.name);
 }
 
 function parseFile(file) {
@@ -51,10 +78,11 @@ function parseCSV(data) {
     });
 }
 
-function displayFileInfo(file) {
+function displayFileInfo(fileName) {
     document.getElementById('dropArea').style.display = 'none';
     document.getElementById('fileInfo').style.display = 'block';
-    document.getElementById('fileName').textContent = `Archivo cargado: ${file.name}`;
+    document.getElementById('fileName').textContent = `Archivo cargado: ${fileName}`;
+    document.getElementById('fileInput').style.display = 'none'; // Hide the file input
 }
 
 function reloadFile() {
@@ -63,6 +91,7 @@ function reloadFile() {
     document.getElementById('calculationOptions').style.display = 'none';
     document.getElementById('showCalcOptionsBtn').style.display = 'inline-block';
     document.getElementById('fileInput').value = '';
+    document.getElementById('fileInput').style.display = 'block'; // Show the file input
     parsedData = [];
 }
 

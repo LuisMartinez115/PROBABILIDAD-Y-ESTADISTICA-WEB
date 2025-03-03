@@ -3,15 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa de Radiación Solar (Demo)</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="styles.css">
-    <title>Radiación Solar - Ahorro Solar</title>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
 <body>
-    <header class="header">
-        <div class="logo">
-            <img src="logotipo.jpg" alt="Logotipo" />
+    <header id="header-radiacion" class="header">
+        <div id="logo-radiacion" class="logo">
+            <img src="logotipo.png" alt="Logotipo" />
         </div>
-        <nav class="menu">
+        <nav id="menu-radiacion" class="menu">
             <a href="home.html" class="menu-item">Inicio</a>
             <a href="clima.html" class="menu-item">Clima</a>
             <a href="calculadora.html" class="menu-item">Calculadora</a>
@@ -20,9 +22,18 @@
         </nav>
     </header>
 
-    <main>
-        <h1>Radiación Solar</h1>
-        <p>Información sobre la radiación solar y su impacto en la eficiencia de los paneles solares.</p>
+    <main id="main-radiacion">
+        <h2 style="text-align: center;">Radiación Solar (Datos de Demostración)</h2>
+        <div id="map"></div>
+        <div style="margin-top: 10px; text-align: center; font-size: 14px; color: #666;">
+            Haz clic en cualquier punto del mapa para obtener datos de radiación solar simulados
+        </div>
     </main>
+
+    <footer id="footer-radiacion" class="footer">
+        <p>&copy; 2023 Tu Empresa. Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="radiacion_solar.js"></script>
 </body>
 </html>

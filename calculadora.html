@@ -5,36 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
     <title>Calculadora de Estadística</title>
-    <style>
-        #dropArea {
-            border: 2px dashed #ccc;
-            border-radius: 20px;
-            width: 300px;
-            height: 200px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 20px auto;
-            cursor: pointer;
-        }
-        #fileInfo {
-            display: none;
-            text-align: center;
-            margin: 20px;
-        }
-        #calculationOptions {
-            display: none;
-            text-align: center;
-            margin: 20px;
-        }
-    </style>
 </head>
 <body>
-    <header class="header">
-        <div class="logo">
-            <img src="logotipo.jpg" alt="Logotipo" />
+    <header id="header-calculadora" class="header">
+        <div id="logo-calculadora" class="logo">
+            <img src="logotipo.png" alt="Logotipo" />
         </div>
-        <nav class="menu">
+        <nav id="menu-calculadora" class="menu">
             <a href="home.html" class="menu-item">Inicio</a>
             <a href="clima.html" class="menu-item">Clima</a>
             <a href="calculadora.html" class="menu-item">Calculadora</a>
@@ -43,25 +20,23 @@
         </nav>
     </header>
 
-    <main>
+    <main id="main-calculadora">
         <h1>Calculadora</h1>
         <p>Calculadora para estimar el ahorro en costos de energía solar.</p>
-        <div id="dropArea">
+        <div id="dropArea" class="drop-area">
             Arrastra y suelta un archivo aquí o haz clic para seleccionar un archivo
         </div>
         <input type="file" id="fileInput" style="display: none;">
-        <div id="fileInfo">
+        <div id="fileInfo" class="file-info" style="display: none;">
             <p id="fileName"></p>
             <button id="reloadBtn">Cargar otro archivo</button>
         </div>
-        <div id="calculationOptions">
+        <div id="calculationOptions" class="calculation-options" style="display: none;">
             <label for="columns">Columnas (separadas por comas):</label>
             <input type="text" id="columns" placeholder="Ej: 6">
             <br>
             <label for="rows">Filas (rango):</label>
             <input type="text" id="rows" placeholder="Ej: 11-15">
-            <br>
-            <button id="calculateBtn">Mostrar opciones de cálculo</button>
             <br>
             <button onclick="calculateMean()">Calcular Media</button>
             <button onclick="calculateMode()">Calcular Moda</button>
@@ -70,6 +45,9 @@
             <button onclick="calculateStdDev()">Calcular Desviación Estándar</button>
         </div>
     </main>
+    <footer id="footer-calculadora" class="footer">
+        <p>&copy; 2023 Tu Empresa. Todos los derechos reservados.</p>
+    </footer>
     <script src="calculadora.js"></script>
 </body>
 </html>

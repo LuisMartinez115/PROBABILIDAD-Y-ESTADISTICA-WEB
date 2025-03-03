@@ -3,7 +3,6 @@ document.getElementById('dropArea').addEventListener('drop', handleDrop);
 document.getElementById('dropArea').addEventListener('dragover', (e) => e.preventDefault());
 document.getElementById('dropArea').addEventListener('click', () => document.getElementById('fileInput').click());
 document.getElementById('reloadBtn').addEventListener('click', reloadFile);
-document.getElementById('calculateBtn').addEventListener('click', showCalculationOptions);
 
 let parsedData = [];
 
@@ -55,7 +54,6 @@ function displayFileInfo(file) {
     document.getElementById('dropArea').style.display = 'none';
     document.getElementById('fileInfo').style.display = 'block';
     document.getElementById('fileName').textContent = `Loaded file: ${file.name}`;
-    document.getElementById('calculationOptions').style.display = 'block';
 }
 
 function reloadFile() {
@@ -64,11 +62,6 @@ function reloadFile() {
     document.getElementById('calculationOptions').style.display = 'none';
     document.getElementById('fileInput').value = '';
     parsedData = [];
-}
-
-function showCalculationOptions() {
-    // Aquí puedes agregar la lógica para mostrar los divs necesarios para calcular
-    alert('Mostrar opciones de cálculo');
 }
 
 function getSelectedData() {

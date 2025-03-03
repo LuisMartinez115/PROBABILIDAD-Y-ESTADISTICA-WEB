@@ -5,57 +5,101 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
     <title>Página de Inicio - Ahorro Solar</title>
-
 </head>
 <body class="home"> <!-- Clase específica para la página de inicio -->
     <header class="header">
         <div class="logo">
-            <img src="logotipo.jpg" alt="Logotipo" />
+            <img src="logotipo.png" alt="Logotipo" />
         </div>
         <nav class="menu">
-            <a href="#ayuda" class="menu-item">Ayuda</a>
+            <a href="#ayuda" class="menu-item" id="helpBtn">Ayuda</a>
             <a href="#estaciones" class="menu-item">Estaciones</a>
             <a href="#compras" class="menu-item">Compras</a>
-            <a href="#calculadora" class="menu-item">Calculadora</a>
+            <a href="calculadora.html" class="menu-item">Calculadora</a>
         </nav>
     </header>
 
     <main>
         <section id="intro-section" class="intro-section">
             <div class="left">
-                <img src="intro-image.jpg" alt="Imagen descriptiva">
+                <img src="imagen_descriptiva.jpeg" alt="Imagen descriptiva">
             </div>
             <div class="right">
                 <h2>¿Quiénes somos?</h2>
-                <p>Texto descriptivo sobre el ahorro solar y sus beneficios.</p>
+                <p>El cambio climático y el agotamiento de los recursos naturales nos impulsan a buscar soluciones innovadoras para el ahorro energético. Somos un equipo comprometido con la sostenibilidad y el uso eficiente de la energía solar. Creemos que la tecnología y los datos pueden ser herramientas poderosas para mejorar la forma en que aprovechamos los recursos renovables. <br>
+                    Nuestra plataforma permite analizar la radiación solar utilizando herramientas estadísticas avanzadas. A través del cálculo de métricas como la media, la varianza y la desviación estándar, ayudamos a los usuarios a tomar mejores decisiones en el uso de la energía solar. <br>
+                    Más que un proyecto tecnológico, esta página es nuestra forma de contribuir al cuidado del planeta. Queremos que más personas accedan a información útil y confiable para reducir su impacto ambiental y hacer un uso más eficiente de la energía.</p>
             </div>
         </section>
         <section id="features-section" class="features-section">
             <div id="feature-clima" class="feature">
                 <a href="clima.html">
-                    <img src="logotipo.jpg" alt="Clima">
+                    <img src="clima.jpeg" alt="Clima">
                     <h3>Clima</h3>
                 </a>
             </div>
             <div id="feature-calculadora" class="feature">
                 <a href="calculadora.html">
-                    <img src="logotipo.jpg" alt="Calculadora">
+                    <img src="calculadora.jpeg" alt="Calculadora">
                     <h3>Calculadora</h3>
                 </a>
             </div>
             <div id="feature-cotizacion" class="feature">
                 <a href="cotizacion.html">
-                    <img src="logotipo.jpg" alt="Cotización">
+                    <img src="cotizacion.jpeg" alt="Cotización">
                     <h3>Cotización</h3>
                 </a>
             </div>
             <div id="feature-radiacion-solar" class="feature">
                 <a href="radiacion_solar.html">
-                    <img src="logotipo.jpg" alt="Radiación Solar">
+                    <img src="radiacion_solar.jpeg" alt="Radiación Solar">
                     <h3>Radiación Solar</h3>
                 </a>
             </div>
         </section>
     </main>
+
+    <!-- Modal de Ayuda -->
+    <div id="helpModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Ayuda</h2>
+            <p>Bienvenido a nuestra plataforma de ahorro solar. Aquí te explicamos cómo usar cada sección:</p>
+            <ul>
+                <li><strong>Clima:</strong> Consulta información sobre el clima y cómo afecta al ahorro solar.</li>
+                <li><strong>Calculadora:</strong> Sube un archivo CSV para calcular métricas estadísticas como la media, moda, mediana, varianza y desviación estándar.</li>
+                <li><strong>Cotización:</strong> Solicita una cotización para la instalación de paneles solares.</li>
+                <li><strong>Radiación Solar:</strong> Haz clic en cualquier punto del mapa para obtener datos simulados de radiación solar.</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Obtener el modal
+        var modal = document.getElementById("helpModal");
+
+        // Obtener el botón que abre el modal
+        var btn = document.getElementById("helpBtn");
+
+        // Obtener el elemento <span> que cierra el modal
+        var span = document.getElementsByClassName("close")[0];
+
+        // Cuando el usuario hace clic en el botón, abre el modal
+        btn.onclick = function() {
+            modal.style.display = "block";
+        }
+
+        // Cuando el usuario hace clic en <span> (x), cierra el modal
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // Cuando el usuario hace clic en cualquier lugar fuera del modal, cierra el modal
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
 </body>
 </html>

@@ -92,12 +92,14 @@ body {
     display: flex;
     justify-content: space-between; /* Espacio entre el logo y el menú */
     align-items: center; /* Centra verticalmente */
-    padding: 20px;
+    padding: 10px 20px;
     background-color: #0099CC; /* Color de fondo del encabezado */
+    border-bottom: 1px solid #ddd;
 }
 
 .logo img {
-    max-width: 100px; /* Ajusta el tamaño del logotipo */
+    max-width: 20%; /* Ajusta el tamaño del logotipo */
+    height: 20%; /* Altura automática */
 }
 
 .menu {
@@ -111,10 +113,12 @@ body {
     padding: 10px 15px; /* Espaciado interno */
     border-radius: 5px; /* Bordes redondeados */
     transition: background-color 0.3s; /* Transición suave para el fondo */
+    font-weight: bold;
 }
 
 .menu-item:hover {
     background-color: rgba(255, 255, 255, 0.2); /* Fondo al pasar el mouse */
+    color: #007bff;
 }
 
 main {
@@ -139,6 +143,16 @@ section {
     background-color: #f9f9f9;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    width: 300px;
+    height: 200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .drop-area:hover {
@@ -149,9 +163,30 @@ section {
     background-color: #e0e0e0;
 }
 
-.drop-area p {
-    margin: 0;
+.file-info {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#fileInfo p {
     font-size: 16px;
+    font-weight: bold;
+}
+
+#fileInfo button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #0099CC;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-right: 10px; /* Espacio entre botones */
+}
+
+#fileInfo button:hover {
+    background-color: #0077AA;
 }
 
 #file-list {
@@ -197,8 +232,9 @@ section {
 }
 
 #intro-section .left img {
-    max-width: 100%;
+    max-width: 70%;
     border-radius: 10px;
+    ;
 }
 
 #features-section {
@@ -236,4 +272,116 @@ section {
 
 #features-section .feature h3:hover {
     color: #0099CC; /* Color del texto al pasar el mouse */
+}
+
+#dropArea, #map {
+    height: 600px;
+    width: 100%; 
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+#fileInfo, .info {
+    padding: 10px; 
+    background: white; 
+    border-radius: 5px; 
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.loading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(0,0,0,0.1);
+    border-radius: 50%;
+    border-top-color: #3388ff;
+    animation: spin 1s ease-in-out infinite;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.footer {
+    text-align: center;
+    padding: 10px 0;
+    background-color: #f8f8f8;
+    border-top: 1px solid #ddd;
+    margin-top: 20px;
+}
+
+/* Estilos para el modal de ayuda */
+.modal {
+    display: none; /* Oculto por defecto */
+    position: fixed; /* Posición fija */
+    z-index: 1000; /* Asegura que esté por encima de otros elementos */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Habilita el scroll si es necesario */
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro semitransparente */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* Centra el modal */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Ancho del modal */
+    border-radius: 10px;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.calculation-options {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.calculation-options label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.calculation-options input {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: calc(100% - 22px); /* Ajusta el ancho para el padding y el borde */
+}
+
+.calculation-options button {
+    padding: 10px 20px;
+    background-color: #0099CC;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.calculation-options button:hover {
+    background-color: #0077AA;
 }

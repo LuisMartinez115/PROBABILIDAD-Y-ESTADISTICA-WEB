@@ -507,3 +507,77 @@ h1 {
 #fileInput {
     display: none; /* Hide the file input by default */
 }
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .menu {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .menu-item {
+        padding: 10px;
+        width: 100%;
+        text-align: center;
+    }
+
+    .drop-area {
+        width: 90%;
+        height: auto;
+        padding: 20px;
+    }
+
+    .calculation-options {
+        padding: 10px;
+    }
+
+    .calculation-options input {
+        width: 100%;
+    }
+
+    .forecast-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .quienes-somos {
+        font-size: 1em;
+        line-height: 1.5;
+        margin: 10px 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .header {
+        padding: 10px;
+    }
+
+    .logo img {
+        max-width: 50%;
+        height: auto;
+    }
+
+    .menu-item {
+        font-size: 14px;
+    }
+
+    .drop-area {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .calculation-options button {
+        width: 100%;
+        margin-top: 5px;
+    }
+
+    .quienes-somos {
+        font-size: 0.9em;
+        line-height: 1.4;
+        margin: 10px 0;
+    }
+}

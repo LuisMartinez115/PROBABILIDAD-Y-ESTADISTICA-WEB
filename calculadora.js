@@ -7,7 +7,7 @@ document.getElementById('showCalcOptionsBtn').addEventListener('click', showCalc
 
 let parsedData = [];
 
-function handleFileSelect(event) {
+function handleFileSelect(event) { 
     const file = event.target.files[0];
     const reader = new FileReader();
 

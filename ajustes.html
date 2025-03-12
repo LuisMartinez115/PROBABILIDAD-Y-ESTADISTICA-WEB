@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Ajustes</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <img src="logotipo.png" alt="Logotipo" />
+        </div>
+        <nav class="menu">
+            <a href="home.html" class="menu-item">Inicio</a>
+            <a href="#ayuda" class="menu-item" id="helpBtn">Ayuda</a>
+            <a href="#estaciones" class="menu-item">Estaciones</a>
+            <a href="#compras" class="menu-item">Compras</a>
+            <a href="calculadora.html" class="menu-item">Calculadora</a>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Ajustes</h1>
+        <p>Aquí podrás realizar ajustes en gráficas por métodos de mínimos cuadrados.</p>
+        <div id="dropArea" class="drop-area">
+            Arrastra y suelta un archivo aquí o haz clic para seleccionar un archivo
+        </div>
+        <input type="file" id="fileInput" accept=".csv, .xlsx" style="display: none;">
+        <div id="fileInfo" class="file-info" style="display: none;">
+            <p id="fileName"></p>
+            <p id="fileDetails"></p>
+            <label for="header">¿El primer valor es el encabezado?</label>
+            <input type="checkbox" id="header">
+            <br>
+            <button id="reloadBtn">Cargar otro archivo</button>
+            <button id="showCalcOptionsBtn">Comenzar a Calcular</button>
+        </div>
+        <div id="calculationOptions" class="calculation-options" style="display: none;">
+            <label for="columns">Columnas (X,Y):</label>
+            <input type="text" id="columns" placeholder="Ej: 1,2">
+            <br>
+            <label for="rows">Filas (rango):</label>
+            <input type="text" id="rows" placeholder="Ej: 1-10">
+            <br>
+            <button onclick="calculateLeastSquares()">Calcular Mínimos Cuadrados</button>
+        </div>
+        <div id="equationResult" class="equation-result" style="display: none;">
+            <h3>Ecuación de Ajuste:</h3>
+            <p id="equation"></p>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>Gracias por visitar nuestra página, quejas de errores al correo 2337979h@umich.mx</p>
+    </footer>
+
+    <script src="ajustes.js"></script>
+</body>
+</html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Calculadora de Matrices</title>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <img src="logotipo.png" alt="Logotipo" />
+        </div>
+        <nav class="menu">
+            <a href="home.html" class="menu-item">Inicio</a>
+            <a href="#ayuda" class="menu-item" id="helpBtn">Ayuda</a>
+            <a href="#estaciones" class="menu-item">Estaciones</a>
+            <a href="#compras" class="menu-item">Compras</a>
+            <a href="calculadora.html" class="menu-item">Calculadora</a>
+        </nav>
+    </header>
+
+    <main>
+        <section id="matrix-calculator-section" class="matrix-calculator-section">
+            <h2>Calculadora de Matrices</h2>
+            <p>Aquí podrás realizar operaciones con matrices.</p>
+            <div class="matrix-inputs">
+                <div class="matrix-container">
+                    <textarea id="matrixA" placeholder="Matriz A (ej. 1,2;3,4)"></textarea>
+                    <div class="matrix-operations-grid">
+                        <button onclick="calculateDeterminant('matrixA')">Determinante A</button>
+                        <button onclick="calculateInverse('matrixA')">Inversa A</button>
+                        <button onclick="calculateTranspose('matrixA')">Transpuesta A</button>
+                        <button onclick="calculateTriangular('matrixA')">Triangular A</button>
+                        <button onclick="calculateDiagonal('matrixA')">Diagonal A</button>
+                        <button onclick="calculateRank('matrixA')">Rango A</button>
+                    </div>
+                </div>
+                <div class="matrix-container">
+                    <textarea id="matrixB" placeholder="Matriz B (ej. 5,6;7,8)"></textarea>
+                    <div class="matrix-operations-grid">
+                        <button onclick="calculateDeterminant('matrixB')">Determinante B</button>
+                        <button onclick="calculateInverse('matrixB')">Inversa B</button>
+                        <button onclick="calculateTranspose('matrixB')">Transpuesta B</button>
+                        <button onclick="calculateTriangular('matrixB')">Triangular B</button>
+                        <button onclick="calculateDiagonal('matrixB')">Diagonal B</button>
+                        <button onclick="calculateRank('matrixB')">Rango B</button>
+                    </div>
+                </div>
+            </div>
+            <div class="matrix-operations">
+                <button onclick="addMatrices()">A + B</button>
+                <button onclick="subtractMatrices()">A - B</button>
+                <button onclick="multiplyMatrices()">A * B</button>
+            </div>
+            <div class="matrix-result">
+                <h3>Resultado:</h3>
+                <pre id="result"></pre>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>Gracias por visitar nuestra página, quejas de errores al correo 2337979h@umich.mx</p>
+    </footer>
+
+    <script>
+        function parseMatrix(input) {
+            return input.split(';').map(row => row.split(',').map(Number));
+        }
+
+        function isSquareMatrix(matrix) {
+            return matrix.length > 0 && matrix.every(row => row.length === matrix.length);
+        }
+
+        function formatNumber(num) {
+            return Math.abs(num - Math.round(num)) < 1e-10 ? Math.round(num) : num.toFixed(3);
+        }
+
+        function displayMatrix(matrix) {
+            return matrix.map(row => row.map(val => `<span class="matrix-value">${formatNumber(val)}</span>`).join(' ')).join('<br>');
+        }
+
+        function addMatrices() {
+            const matrixA = parseMatrix(document.getElementById('matrixA').value);
+            const matrixB = parseMatrix(document.getElementById('matrixB').value);
+            if (matrixA.length !== matrixB.length || matrixA[0].length !== matrixB[0].length) {
+                alert('Las matrices deben tener el mismo tamaño para la suma.');
+                return;
+            }
+            const result = matrixA.map((row, i) => row.map((val, j) => val + matrixB[i][j]));
+            document.getElementById('result').innerHTML = displayMatrix(result);
+        }
+
+        function subtractMatrices() {
+            const matrixA = parseMatrix(document.getElementById('matrixA').value);
+            const matrixB = parseMatrix(document.getElementById('matrixB').value);
+            if (matrixA.length !== matrixB.length || matrixA[0].length !== matrixB[0].length) {
+                alert('Las matrices deben tener el mismo tamaño para la resta.');
+                return;
+            }
+            const result = matrixA.map((row, i) => row.map((val, j) => val - matrixB[i][j]));
+            document.getElementById('result').innerHTML = displayMatrix(result);
+        }
+
+        function multiplyMatrices() {
+            const matrixA = parseMatrix(document.getElementById('matrixA').value);
+            const matrixB = parseMatrix(document.getElementById('matrixB').value);
+            if (matrixA[0].length !== matrixB.length) {
+                alert('El número de columnas de la matriz A debe ser igual al número de filas de la matriz B para la multiplicación.');
+                return;
+            }
+            const result = matrixA.map((row, i) => row.map((_, j) => row.reduce((sum, val, k) => sum + val * matrixB[k][j], 0)));
+            document.getElementById('result').innerHTML = displayMatrix(result);
+        }
+
+        function calculateDeterminant(matrixId) {
+            const matrix = parseMatrix(document.getElementById(matrixId).value);
+            if (!isSquareMatrix(matrix)) {
+                alert('La matriz debe ser cuadrada para calcular el determinante.');
+                return;
+            }
+            const result = determinant(matrix);
+            document.getElementById('result').textContent = formatNumber(result);
+        }
+
+        function calculateInverse(matrixId) {
+            const matrix = parseMatrix(document.getElementById(matrixId).value);
+            if (!isSquareMatrix(matrix)) {
+                alert('La matriz debe ser cuadrada para calcular la inversa.');
+                return;
+            }
+            const result = inverse(matrix);
+            document.getElementById('result').innerHTML = displayMatrix(result);
+        }
+
+        function calculateTranspose(matrixId) {
+            const matrix = parseMatrix(document.getElementById(matrixId).value);
+            const result = transpose(matrix);
+            document.getElementById('result').innerHTML = displayMatrix(result);
+        }
+
+        function calculateTriangular(matrixId) {
+            const matrix = parseMatrix(document.getElementById(matrixId).value);
+            if (!isSquareMatrix(matrix)) {
+                alert('La matriz debe ser cuadrada para calcular la triangular.');
+                return;
+            }
+            const result = triangular(matrix);
+            document.getElementById('result').innerHTML = displayMatrix(result);
+        }
+
+        function calculateDiagonal(matrixId) {
+            const matrix = parseMatrix(document.getElementById(matrixId).value);
+            if (!isSquareMatrix(matrix)) {
+                alert('La matriz debe ser cuadrada para calcular la diagonal.');
+                return;
+            }
+            const result = diagonal(matrix);
+            document.getElementById('result').innerHTML = displayMatrix(result);
+        }
+
+        function calculateRank(matrixId) {
+            const matrix = parseMatrix(document.getElementById(matrixId).value);
+            const result = rank(matrix);
+            document.getElementById('result').textContent = result;
+        }
+
+        // Implement matrix operations
+        function determinant(matrix) {
+            if (matrix.length === 2) {
+                return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
+            }
+            let det = 0;
+            for (let i = 0; i < matrix.length; i++) {
+                const subMatrix = matrix.slice(1).map(row => row.filter((_, j) => j !== i));
+                det += matrix[0][i] * determinant(subMatrix) * (i % 2 === 0 ? 1 : -1);
+            }
+            return det;
+        }
+
+        function inverse(matrix) {
+            const det = determinant(matrix);
+            if (det === 0) {
+                alert('La matriz no tiene inversa.');
+                return matrix;
+            }
+            const adjugate = matrix.map((row, i) =>
+                row.map((_, j) => {
+                    const subMatrix = matrix
+                        .filter((_, m) => m !== i)
+                        .map(row => row.filter((_, n) => n !== j));
+                    return determinant(subMatrix) * ((i + j) % 2 === 0 ? 1 : -1);
+                })
+            );
+            return transpose(adjugate).map(row => row.map(val => val / det));
+        }
+
+        function transpose(matrix) {
+            return matrix[0].map((_, colIndex) => matrix.map(row => row[colIndex]));
+        }
+
+        function triangular(matrix) {
+            // Implement triangular matrix calculation
+            return matrix;
+        }
+
+        function diagonal(matrix) {
+            // Implement diagonal matrix calculation
+            return matrix.map((row, i) => row.map((val, j) => (i === j ? val : 0)));
+        }
+
+        function rank(matrix) {
+            // Implement rank calculation
+            return 'Rango calculado';
+        }
+    </script>
+</body>
+</html>

@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="styles.css">
     <title>Ajustes</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <header class="header">
@@ -44,11 +45,23 @@
             <label for="rows">Filas (rango):</label>
             <input type="text" id="rows" placeholder="Ej: 1-10">
             <br>
-            <button onclick="calculateLeastSquares()">Calcular Mínimos Cuadrados</button>
+            <label for="independentVar">Variable Independiente:</label>
+            <select id="independentVar"></select>
+            <br>
+            <label for="dependentVar">Variable Dependiente:</label>
+            <select id="dependentVar"></select>
+            <br>
+            <button onclick="calculateLinearLeastSquares()">Calcular Ecuación Lineal</button>
+            <button onclick="calculateQuadraticLeastSquares()">Calcular Ecuación Cuadrática</button>
+            <button onclick="calculateCubicLeastSquares()">Calcular Ecuación Cúbica</button>
         </div>
         <div id="equationResult" class="equation-result" style="display: none;">
             <h3>Ecuación de Ajuste:</h3>
             <p id="equation"></p>
+        </div>
+        <div id="chartContainer" style="display: none;">
+            <h3>Gráfica de Ajuste de Mínimos Cuadrados</h3>
+            <canvas id="adjustmentChart"></canvas>
         </div>
     </main>
 

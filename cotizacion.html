@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <title>Cotización - Ahorro Solar</title>
 </head>
 <body>
@@ -22,7 +23,18 @@
 
     <main>
         <h1>Cotización</h1>
-        <p>Solicita una cotización para la instalación de paneles solares.</p>
+        <form id="coordinates-form">
+            <label for="coordinates">Introduce tus coordenadas:</label>
+            <input type="text" id="coordinates" name="coordinates" placeholder="Latitud, Longitud" required>
+            <button type="button" id="unknown-coordinates-btn">¿No conoces las coordenadas?</button>
+            <div id="options" style="display: none; margin-top: 10px;">
+                <button type="button" id="map-option">Señalar en el mapa</button>
+<button type="button" id="address-option">Utilizar dirección</button>
+            </div>
+        </form>
     </main>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="cotizacion.js"></script>
+
 </body>
 </html>

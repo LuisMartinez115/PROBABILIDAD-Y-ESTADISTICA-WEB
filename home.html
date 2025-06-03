@@ -4,6 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
+    <style>
+        #verReporteLuis {
+            background-color: #4CAF50; /* Verde */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 10px 0;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        #verReporteLuis:hover {
+            background-color: #45a049; /* Verde más oscuro */
+        }
+    </style>
     <title>Página de Inicio - Ahorro Solar</title>
 </head>
 <body class="home"> <!-- Clase específica para la página de inicio -->
@@ -29,7 +48,12 @@
                 <p>El cambio climático y el agotamiento de los recursos naturales nos impulsan a buscar soluciones innovadoras para el ahorro energético. Somos un equipo comprometido con la sostenibilidad y el uso eficiente de la energía solar. Creemos que la tecnología y los datos pueden ser herramientas poderosas para mejorar la forma en que aprovechamos los recursos renovables. <br>
                     Nuestra plataforma permite analizar la radiación solar utilizando herramientas estadísticas avanzadas. A través del cálculo de métricas como la media, la varianza y la desviación estándar, ayudamos a los usuarios a tomar mejores decisiones en el uso de la energía solar. <br>
                     Más que un proyecto tecnológico, esta página es nuestra forma de contribuir al cuidado del planeta. Queremos que más personas accedan a información útil y confiable para reducir su impacto ambiental y hacer un uso más eficiente de la energía.</p>
+                <button id="verReporteLuis" onclick="location.href='reporte_luis.html'">Ver Reporte Luis</button>
             </div>
+        </section>
+        <section id="objetivo">
+            <h2>Objetivo</h2>
+            <p>Determinar cuántos paneles solares necesita una casa para cubrir todo su consumo eléctrico en un mes específico, usando datos reales o simulados de radiación solar y consumo. Aplicarás conceptos de probabilidad, variabilidad, y optimización en un contexto real.</p>
         </section>
         <section id="features-section" class="features-section">
             <div id="feature-clima" class="feature">
@@ -56,6 +80,12 @@
                     <h3>Radiación Solar</h3>
                 </a>
             </div>
+            <div id="feature-numeros-aleatorios" class="feature">
+                <a href="numeros_aleatorios.html">
+                    <img src="numeros_aleatorios.png" alt="Números Aleatorios">
+                    <h3>Números Aleatorios</h3>
+                </a>
+            </div>
             <div id="feature-calculadora-matrices" class="feature">
                 <a href="calculadora_matrices.html">
                     <img src="calculadora_matrices.jpeg" alt="Calculadora de Matrices">
@@ -64,8 +94,14 @@
             </div>
             <div id="feature-ajustes" class="feature">
                 <a href="ajustes.html">
-                    <img src="ajustes.jpeg" alt="Ajustes">
+                    <img src="ajuste.png" alt="Ajustes">
                     <h3>Ajustes</h3>
+                </a>
+            </div>
+            <div id="feature-ajuste-3d" class="feature">
+                <a href="ajuste_3d.html">
+                    <img src="ajuste_3d.jpeg" alt="Ajuste 3D">
+                    <h3>Ajuste 3D</h3>
                 </a>
             </div>
         </section>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Números Aleatorios</title>
+    <style>
+        #formNumerosAleatorios {
+            background: #f9f9f9;
+            border-radius: 10px;
+            padding: 24px 32px;
+            max-width: 400px;
+            margin: 30px auto;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            font-size: 16px;
+        }
+        #formNumerosAleatorios label {
+            display: block;
+            margin-bottom: 4px;
+            font-weight: bold;
+        }
+        #formNumerosAleatorios input,
+        #formNumerosAleatorios select {
+            width: 100%;
+            padding: 7px 10px;
+            margin-bottom: 16px;
+            border: 1px solid #bbb;
+            border-radius: 4px;
+            font-size: 15px;
+        }
+        #formNumerosAleatorios button[type="submit"] {
+            background: #2196F3;
+            color: #fff;
+            border: none;
+            padding: 10px 22px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+        #formNumerosAleatorios button[type="submit"]:hover {
+            background: #1769aa;
+        }
+        #minijuego {
+            max-width: 600px;
+            margin: 30px auto;
+            background: #f5faff;
+            border-radius: 10px;
+            padding: 24px 32px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+            font-size: 17px;
+        }
+        #minijuego h3 {
+            margin-top: 0;
+        }
+        #pelotasContainer {
+            margin: 20px 0 10px 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+        .pelota {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            margin: 5px;
+            background: #4CAF50;
+            border-radius: 50%;
+            color: #fff;
+            line-height: 40px;
+            text-align: center;
+            font-size: 20px;
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+        }
+        .pelota:disabled {
+            background: #bdbdbd;
+            cursor: not-allowed;
+        }
+        .pelota.seleccionada {
+            background: #2196F3 !important;
+            transform: scale(1.08);
+        }
+        #siguienteRonda, #reiniciarJuego {
+            background: #ff9800;
+            color: #fff;
+            border: none;
+            padding: 10px 22px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 12px;
+        }
+        #siguienteRonda:hover, #reiniciarJuego:hover {
+            background: #e65100;
+        }
+        #seleccionInfo {
+            font-size: 16px;
+            color: #333;
+        }
+        #minijuego ol {
+            padding-left: 22px;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <img src="logotipo.png" alt="Logotipo" />
+        </div>
+        <nav class="menu">
+            <a href="home.html" class="menu-item">Inicio</a>
+            <a href="#" class="menu-item" id="ayudaBtn">Ayuda</a>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Números Aleatorios</h1>
+        <p>En esta sección podrás explorar la generación y análisis de números aleatorios para aplicaciones estadísticas y de simulación.</p>
+        <form id="formNumerosAleatorios">
+            <label for="maximo">Número máximo:</label>
+            <input type="number" id="maximo" name="maximo" min="1" required><br><br>
+
+            <label for="repeticiones">Total de repeticiones:</label>
+            <input type="number" id="repeticiones" name="repeticiones" min="1" required><br><br>
+
+            <label for="pelotas">Número de pelotas a sacar:</label>
+            <input type="number" id="pelotas" name="pelotas" min="1" required><br><br>
+
+            <label for="operacion">Condición:</label>
+            <select id="operacion" name="operacion" required>
+                <option value="suma">Suma</option>
+                <option value="diferencia">Diferencia</option>
+                <option value="multiplicacion">Multiplicación</option>
+                <option value="division">División</option>
+            </select><br><br>
+
+            <label for="comparador">Comparador:</label>
+            <select id="comparador" name="comparador" required>
+                <option value="igual">Igual a</option>
+                <option value="mayor">Mayor a</option>
+                <option value="menor">Menor a</option>
+                <option value="mayor_igual">Mayor o igual a</option>
+                <option value="menor_igual">Menor o igual a</option>
+            </select><br><br>
+
+            <label for="valorComparar">Valor a comparar:</label>
+            <input type="number" id="valorComparar" name="valorComparar" required><br><br>
+
+            <button type="submit">Generar</button>
+        </form>
+        <div id="minijuego" style="display:none; margin-top:20px;"></div>
+    </main>
+
+    <!-- Modal de Ayuda -->
+    <div id="ayudaModal" style="display:none;position:fixed;z-index:1000;left:0;top:0;width:100vw;height:100vh;background:rgba(0,0,0,0.35);">
+        <div style="background:#fff;max-width:420px;margin:80px auto;padding:28px 24px;border-radius:10px;position:relative;box-shadow:0 2px 12px rgba(0,0,0,0.18);">
+            <span id="cerrarAyuda" style="position:absolute;top:10px;right:18px;font-size:22px;cursor:pointer;">&times;</span>
+            <h2>Ayuda - Minijuego de Números Aleatorios</h2>
+            <ul style="font-size:16px;line-height:1.7;">
+                <li>Completa el formulario para definir el rango de números, repeticiones, cantidad de pelotas a sacar y la condición a evaluar.</li>
+                <li>Al presionar "Generar", aparecerán pelotas ocultas. Haz clic en las pelotas para revelar su número. Solo puedes seleccionar la cantidad indicada.</li>
+                <li>El resultado de tu selección se evaluará según la operación y condición elegidas (por ejemplo, suma mayor a 10).</li>
+                <li>Al finalizar todas las repeticiones, verás un resumen de tus resultados y una gráfica de probabilidades teóricas y experimentales.</li>
+                <li>Puedes reiniciar el minijuego en cualquier momento.</li>
+            </ul>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>Gracias por visitar nuestra página, quejas de errores al correo 2337979h@umich.mx</p>
+    </footer>
+
+    <script src="numeros_aleatorios.js"></script>
+    <script>
+    // Modal de ayuda
+    document.getElementById('ayudaBtn').onclick = function(e) {
+        e.preventDefault();
+        document.getElementById('ayudaModal').style.display = 'block';
+    };
+    document.getElementById('cerrarAyuda').onclick = function() {
+        document.getElementById('ayudaModal').style.display = 'none';
+    };
+    window.onclick = function(event) {
+        var modal = document.getElementById('ayudaModal');
+        if (event.target == modal) {
+            modal.style.display = 'none';
+        }
+    };
+    </script>
+</body>
+</html>

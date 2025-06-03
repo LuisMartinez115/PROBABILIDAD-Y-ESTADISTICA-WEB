@@ -16,7 +16,7 @@ const adjustmentChart = document.getElementById('adjustmentChart').getContext('2
 let workbook;
 let chart;
 
-dropArea.addEventListener('click', () => fileInput.click());
+dropArea.addEventListener(' click', () => fileInput.click());
 fileInput.addEventListener('change', () => handleFile(fileInput.files));
 dropArea.addEventListener('dragover', (e) => {
     e.preventDefault();

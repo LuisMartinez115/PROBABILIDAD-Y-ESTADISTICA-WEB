@@ -105,6 +105,126 @@
         #minijuego ol {
             padding-left: 22px;
         }
+        .dual-section {
+            display: flex;
+            width: 100%;
+            min-height: 70vh;
+            justify-content: center;
+            align-items: center;
+        }
+        .side-section {
+            flex: 1;
+            padding: 32px 18px;
+            box-sizing: border-box;
+            position: relative;
+            min-width: 320px;
+            min-height: 400px;
+            transition: background 0.2s, box-shadow 0.3s, transform 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            border-radius: 18px;
+            margin: 18px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            /* Fondo más oscuro usando overlay */
+            position: relative;
+            overflow: hidden;
+            color: #fff;
+        }
+        #minijuegos-section::before,
+        #teoria-section::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: rgba(30,40,60,0.68); /* Más oscuro para mejor contraste */
+            z-index: 0;
+            border-radius: 18px;
+        }
+        #minijuegos-section {
+            background-image: url(minijuegos.jpeg);
+            border-right: 2px solid #bdbdbd;
+        }
+        #teoria-section {
+            background-image: url(teoria_distribuciones.jpeg);
+        }
+        .side-section > * {
+            position: relative;
+            z-index: 1;
+        }
+        .side-section:hover, .side-section:focus-within {
+            box-shadow: 0 8px 32px rgba(33,150,243,0.18), 0 2px 12px rgba(0,0,0,0.13);
+            transform: scale(1.03) translateY(-6px);
+            z-index: 2;
+        }
+        .dual-section h2 {
+            font-family: 'Segoe UI', 'Montserrat', 'Poppins', Arial, sans-serif;
+            font-size: 2.1rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #fff !important;
+            text-shadow: 2px 4px 12px #222, 0 1px 0 #fff;
+            -webkit-text-fill-color: unset;
+            background: none;
+            text-align: center;
+            margin-bottom: 18px;
+            transition: color 0.2s;
+        }
+        .distribuciones-btns {
+            display: none;
+            flex-wrap: wrap;
+            gap: 14px;
+            justify-content: center;
+            margin-top: 18px;
+            width: 100%;
+            z-index: 2;
+        }
+        .side-section:hover .distribuciones-btns,
+        .side-section:focus-within .distribuciones-btns {
+            display: flex;
+            animation: fadeInBtns 0.4s;
+        }
+        .side-section:hover h2,
+        .side-section:focus-within h2 {
+            color: #ffe082 !important;
+            text-shadow: 2px 4px 16px #111, 0 1px 0 #fff;
+        }
+        .distribuciones-btns button {
+            background: #fff;
+            color: #1565c0;
+            border: none;
+            border-radius: 7px;
+            padding: 12px 18px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 1px 6px rgba(0,0,0,0.10);
+            transition: background 0.18s, color 0.18s, transform 0.18s;
+        }
+        .distribuciones-btns button:hover {
+            background: #2196F3;
+            color: #fff;
+            transform: scale(1.07);
+        }
+        @keyframes fadeInBtns {
+            from { opacity: 0; transform: translateY(20px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+        /* Oculta el antiguo menú */
+        .menu-distribuciones, .menu-content {
+            display: none !important;
+        }
+        #teoria-content {
+            margin-top: 20px;
+            padding: 20px;
+            background: #e3f2fd; /* Cambiar color de fondo */
+            border-radius: 10px;
+            color: #0d47a1; /* Cambiar color de texto */
+            display: none;
+        }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
@@ -120,54 +240,55 @@
     </header>
 
     <main>
-        <h1>Números Aleatorios</h1>
-        <p>En esta sección podrás explorar la generación y análisis de números aleatorios para aplicaciones estadísticas y de simulación.</p>
-        <form id="formNumerosAleatorios">
-            <label for="maximo">Número máximo:</label>
-            <input type="number" id="maximo" name="maximo" min="1" required><br><br>
-
-            <label for="repeticiones">Total de repeticiones:</label>
-            <input type="number" id="repeticiones" name="repeticiones" min="1" required><br><br>
-
-            <label for="pelotas">Número de pelotas a sacar:</label>
-            <input type="number" id="pelotas" name="pelotas" min="1" required><br><br>
-
-            <label for="operacion">Condición:</label>
-            <select id="operacion" name="operacion" required>
-                <option value="suma">Suma</option>
-                <option value="diferencia">Diferencia</option>
-                <option value="multiplicacion">Multiplicación</option>
-                <option value="division">División</option>
-            </select><br><br>
-
-            <label for="comparador">Comparador:</label>
-            <select id="comparador" name="comparador" required>
-                <option value="igual">Igual a</option>
-                <option value="mayor">Mayor a</option>
-                <option value="menor">Menor a</option>
-                <option value="mayor_igual">Mayor o igual a</option>
-                <option value="menor_igual">Menor o igual a</option>
-            </select><br><br>
-
-            <label for="valorComparar">Valor a comparar:</label>
-            <input type="number" id="valorComparar" name="valorComparar" required><br><br>
-
-            <button type="submit">Generar</button>
-        </form>
-        <div id="minijuego" style="display:none; margin-top:20px;"></div>
+        <div class="dual-section">
+            <section class="side-section" id="minijuegos-section">
+                <h2>Minijuegos</h2>
+                <div class="distribuciones-btns">
+                    <button onclick="window.location.href='minijuego_numeros.html?dist=bernoulli'">Distribución Bernoulli</button>
+                    <button onclick="window.location.href='minijuego_numeros.html?dist=binomial'">Distribución Binomial</button>
+                    <button onclick="window.location.href='minijuego_numeros.html?dist=gamma'">Distribución Gama</button>
+                    <button onclick="window.location.href='minijuego_numeros.html?dist=poisson'">Distribución Poisson</button>
+                    <button onclick="window.location.href='minijuego_numeros.html?dist=geometrica'">Distribución Geométrica</button>
+                    <button onclick="window.location.href='minijuego_numeros.html?dist=hipergeometrica'">Distribución Hipergeométrica</button>
+                    <button onclick="window.location.href='minijuego_numeros.html?dist=uniforme'">Distribución Uniforme</button>
+                    <button onclick="window.location.href='minijuego_numeros.html?dist=gaussiana'">Distribución Gaussiana</button>
+                    <button onclick="window.location.href='minijuego_numeros.html?dist=exponencial'">Distribución Exponencial</button>
+                </div>
+                <!-- El minijuego ya no se muestra aquí, solo los botones -->
+            </section>
+            <section class="side-section" id="teoria-section">
+                <h2>Teoría de Distribuciones</h2>
+                <div class="distribuciones-btns">
+                    <button onclick="mostrarTeoria('bernoulli')">Distribución Bernoulli</button>
+                    <button onclick="mostrarTeoria('binomial')">Distribución Binomial</button>
+                    <button onclick="mostrarTeoria('gamma')">Distribución Gama</button>
+                    <button onclick="mostrarTeoria('poisson')">Distribución Poisson</button>
+                    <button onclick="mostrarTeoria('geometrica')">Distribución Geométrica</button>
+                    <button onclick="mostrarTeoria('hipergeometrica')">Distribución Hipergeométrica</button>
+                    <button onclick="mostrarTeoria('uniforme')">Distribución Uniforme</button>
+                    <button onclick="mostrarTeoria('gaussiana')">Distribución Gaussiana</button>
+                    <button onclick="mostrarTeoria('exponencial')">Distribución Exponencial</button>
+                </div>
+                <div id="teoria-content" style="margin-top: 20px; padding: 20px; background: #e3f2fd; border-radius: 10px; color: #0d47a1; display: none;">
+                    <h3 id="teoria-title"></h3>
+                    <p id="teoria-description"></p>
+                </div>
+            </section>
+        </div>
     </main>
 
     <!-- Modal de Ayuda -->
     <div id="ayudaModal" style="display:none;position:fixed;z-index:1000;left:0;top:0;width:100vw;height:100vh;background:rgba(0,0,0,0.35);">
-        <div style="background:#fff;max-width:420px;margin:80px auto;padding:28px 24px;border-radius:10px;position:relative;box-shadow:0 2px 12px rgba(0,0,0,0.18);">
-            <span id="cerrarAyuda" style="position:absolute;top:10px;right:18px;font-size:22px;cursor:pointer;">&times;</span>
-            <h2>Ayuda - Minijuego de Números Aleatorios</h2>
-            <ul style="font-size:16px;line-height:1.7;">
-                <li>Completa el formulario para definir el rango de números, repeticiones, cantidad de pelotas a sacar y la condición a evaluar.</li>
-                <li>Al presionar "Generar", aparecerán pelotas ocultas. Haz clic en las pelotas para revelar su número. Solo puedes seleccionar la cantidad indicada.</li>
-                <li>El resultado de tu selección se evaluará según la operación y condición elegidas (por ejemplo, suma mayor a 10).</li>
-                <li>Al finalizar todas las repeticiones, verás un resumen de tus resultados y una gráfica de probabilidades teóricas y experimentales.</li>
-                <li>Puedes reiniciar el minijuego en cualquier momento.</li>
+        <div style="background:#fff;max-width:480px;margin:80px auto;padding:32px 28px;border-radius:12px;position:relative;box-shadow:0 2px 12px rgba(0,0,0,0.18);">
+            <span id="cerrarAyuda" style="position:absolute;top:10px;right:18px;font-size:28px;cursor:pointer;font-weight:bold;color:#2196F3;">&times;</span>
+            <h2 style="margin-top:0;color:#1565c0;text-align:center;">Ayuda - ¿Cómo usar los minijuegos?</h2>
+            <ul style="font-size:17px;line-height:1.8;margin-bottom:0;">
+                <li><b>Selecciona una distribución</b> en la sección de Minijuegos para explorar diferentes experimentos de probabilidad.</li>
+                <li>En cada minijuego, <b>llena el formulario</b> con los parámetros que desees (por ejemplo, número de pelotas, repeticiones, condición, etc).</li>
+                <li>Haz clic en <b>Generar</b> o el botón correspondiente para simular el experimento.</li>
+                <li>Observa los resultados experimentales y teóricos, así como las gráficas de distribución de probabilidad.</li>
+                <li>Puedes <b>reiniciar</b> el minijuego en cualquier momento para probar otros parámetros.</li>
+                <li>En la sección de Teoría de Distribuciones puedes consultar información sobre cada distribución.</li>
             </ul>
         </div>
     </div>
@@ -192,6 +313,174 @@
             modal.style.display = 'none';
         }
     };
+
+    const teorias = {
+        bernoulli: {
+            title: "Distribución Bernoulli",
+            description: `
+                La distribución Bernoulli modela experimentos con dos posibles resultados: éxito (1) o fracaso (0). 
+                Es útil para representar eventos binarios como lanzar una moneda. 
+                La probabilidad de éxito se denota como p, y la probabilidad de fracaso como 1-p.
+                <ul>
+                    <li><b>Ejemplo:</b> Lanzar una moneda y obtener cara o cruz.</li>
+                    <li><b>Fórmula:</b> P(X=1) = p, P(X=0) = 1-p</li>
+                    <li><b>Propiedades:</b>
+                        <ul>
+                            <li>Esperanza: E(X) = p</li>
+                            <li>Varianza: Var(X) = p(1-p)</li>
+                        </ul>
+                    </li>
+                </ul>
+            `
+        },
+        binomial: {
+            title: "Distribución Binomial",
+            description: `
+                La distribución Binomial describe el número de éxitos en una serie de ensayos independientes con probabilidad constante de éxito. 
+                Es útil para modelar eventos repetidos con dos posibles resultados.
+                <ul>
+                    <li><b>Ejemplo:</b> Obtener caras al lanzar una moneda varias veces.</li>
+                    <li><b>Fórmula:</b> P(X=k) = (nCk) * p^k * (1-p)^(n-k), donde n es el número de ensayos y k el número de éxitos.</li>
+                    <li><b>Propiedades:</b>
+                        <ul>
+                            <li>Esperanza: E(X) = np</li>
+                            <li>Varianza: Var(X) = np(1-p)</li>
+                        </ul>
+                    </li>
+                </ul>
+            `
+        },
+        gamma: {
+            title: "Distribución Gama",
+            description: `
+                La distribución Gama modela el tiempo hasta que ocurren k eventos en un proceso de Poisson. 
+                Es útil para representar tiempos de espera acumulativos.
+                <ul>
+                    <li><b>Ejemplo:</b> Tiempo hasta que se cosechan k cultivos.</li>
+                    <li><b>Fórmula:</b> f(x) = (x^(k-1) * e^(-x/θ)) / (Γ(k) * θ^k), donde k es la forma y θ la escala.</li>
+                    <li><b>Propiedades:</b>
+                        <ul>
+                            <li>Esperanza: E(X) = kθ</li>
+                            <li>Varianza: Var(X) = kθ²</li>
+                        </ul>
+                    </li>
+                </ul>
+            `
+        },
+        poisson: {
+            title: "Distribución Poisson",
+            description: `
+                La distribución Poisson modela la cantidad de eventos que ocurren en un intervalo de tiempo o espacio fijo, con una tasa promedio constante. 
+                Es útil para modelar eventos raros.
+                <ul>
+                    <li><b>Ejemplo:</b> Número de llamadas telefónicas por hora.</li>
+                    <li><b>Fórmula:</b> P(X=k) = (λ^k * e^(-λ)) / k!, donde λ es la tasa promedio.</li>
+                    <li><b>Propiedades:</b>
+                        <ul>
+                            <li>Esperanza: E(X) = λ</li>
+                            <li>Varianza: Var(X) = λ</li>
+                        </ul>
+                    </li>
+                </ul>
+            `
+        },
+        geometrica: {
+            title: "Distribución Geométrica",
+            description: `
+                La distribución Geométrica describe el número de ensayos necesarios para obtener el primer éxito en un experimento con probabilidad constante de éxito. 
+                Es útil para modelar eventos hasta el primer éxito.
+                <ul>
+                    <li><b>Ejemplo:</b> Lanzar un dado hasta obtener un 6.</li>
+                    <li><b>Fórmula:</b> P(X=k) = (1-p)^(k-1) * p, donde p es la probabilidad de éxito.</li>
+                    <li><b>Propiedades:</b>
+                        <ul>
+                            <li>Esperanza: E(X) = 1/p</li>
+                            <li>Varianza: Var(X) = (1-p)/p²</li>
+                        </ul>
+                    </li>
+                </ul>
+            `
+        },
+        hipergeometrica: {
+            title: "Distribución Hipergeométrica",
+            description: `
+                La distribución Hipergeométrica modela el número de éxitos en una muestra sin reemplazo de una población finita. 
+                Es útil para modelar selecciones sin reemplazo.
+                <ul>
+                    <li><b>Ejemplo:</b> Sacar pelotas de colores de un jarrón.</li>
+                    <li><b>Fórmula:</b> P(X=k) = [(C(K,k) * C(N-K,n-k)) / C(N,n)], donde N es el tamaño de la población, K el número de éxitos en la población, n el tamaño de la muestra y k el número de éxitos en la muestra.</li>
+                    <li><b>Propiedades:</b>
+                        <ul>
+                            <li>Esperanza: E(X) = n(K/N)</li>
+                            <li>Varianza: Var(X) = n(K/N)(1-K/N)(N-n)/(N-1)</li>
+                        </ul>
+                    </li>
+                </ul>
+            `
+        },
+        uniforme: {
+            title: "Distribución Uniforme",
+            description: `
+                La distribución Uniforme asigna la misma probabilidad a todos los valores dentro de un rango. 
+                Es útil para modelar eventos equiprobables.
+                <ul>
+                    <li><b>Ejemplo:</b> El resultado de lanzar un dado justo.</li>
+                    <li><b>Fórmula:</b> f(x) = 1 / (b-a), donde a y b son los límites del rango.</li>
+                    <li><b>Propiedades:</b>
+                        <ul>
+                            <li>Esperanza: E(X) = (a+b)/2</li>
+                            <li>Varianza: Var(X) = (b-a)²/12</li>
+                        </ul>
+                    </li>
+                </ul>
+            `
+        },
+        gaussiana: {
+            title: "Distribución Gaussiana",
+            description: `
+                La distribución Gaussiana, también conocida como normal, modela datos que se agrupan alrededor de una media con una dispersión simétrica. 
+                Es útil para modelar fenómenos naturales.
+                <ul>
+                    <li><b>Ejemplo:</b> Alturas de personas en una población.</li>
+                    <li><b>Fórmula:</b> f(x) = (1 / (σ * √(2π))) * e^(-(x-μ)^2 / (2σ^2)), donde μ es la media y σ la desviación estándar.</li>
+                    <li><b>Propiedades:</b>
+                        <ul>
+                            <li>Esperanza: E(X) = μ</li>
+                            <li>Varianza: Var(X) = σ²</li>
+                        </ul>
+                    </li>
+                </ul>
+            `
+        },
+        exponencial: {
+            title: "Distribución Exponencial",
+            description: `
+                La distribución Exponencial modela el tiempo entre eventos en un proceso de Poisson. 
+                Es útil para modelar tiempos de espera.
+                <ul>
+                    <li><b>Ejemplo:</b> Tiempo entre llegadas de clientes a una tienda.</li>
+                    <li><b>Fórmula:</b> f(x) = λ * e^(-λx), donde λ es la tasa promedio.</li>
+                    <li><b>Propiedades:</b>
+                        <ul>
+                            <li>Esperanza: E(X) = 1/λ</li>
+                            <li>Varianza: Var(X) = 1/λ²</li>
+                        </ul>
+                    </li>
+                </ul>
+            `
+        }
+    };
+
+    function mostrarTeoria(distribucion) {
+        const teoria = teorias[distribucion];
+        if (teoria) {
+            document.getElementById('teoria-title').textContent = teoria.title;
+            document.getElementById('teoria-description').innerHTML = teoria.description;
+            document.getElementById('teoria-content').style.display = 'block';
+        } else {
+            console.error(`No se encontró información para la distribución: ${distribucion}`);
+        }
+    }
     </script>
 </body>
 </html>

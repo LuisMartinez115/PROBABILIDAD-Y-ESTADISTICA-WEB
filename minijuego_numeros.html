@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minijuego Distribución Uniforme</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="minijuego_numeros.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1 id="titulo-principal">Minijuego: Dado y Distribución Uniforme</h1>
+        <div class="explicacion" id="explicacion-principal">
+            <strong>¿Cómo funciona?</strong><br>
+            Elige el número de caras de un dado, el número de repeticiones (lanzamientos) y un número objetivo (entre 1 y el número de caras). El juego simulará lanzar el dado la cantidad de veces indicada y contará cuántas veces salió tu número. Al final, verás la distribución experimental y la teórica de los resultados.
+        </div>
+        <form id="formDado">
+            <label for="caras">Número de caras del dado:</label>
+            <input type="number" id="caras" name="caras" min="2" max="100" required>
+
+            <label for="repeticiones">Número de repeticiones:</label>
+            <input type="number" id="repeticiones" name="repeticiones" min="1" max="10000" required>
+
+            <label for="objetivo">Número objetivo (cara a buscar):</label>
+            <input type="number" id="objetivo" name="objetivo" min="1" required>
+
+            <button type="submit">Lanzar dado</button>
+        </form>
+        <div id="animacionDado"></div>
+        <div id="resultados"></div>
+        <div id="grafica-container" style="display:none;">
+            <canvas id="grafica"></canvas>
+        </div>
+        <div id="minijuego-hipergeometrica" style="display:none;">
+            <h2>Minijuego: Jarrón de Pelotas (Distribución Hipergeométrica)</h2>
+            <div class="explicacion">
+                <strong>¿Cómo funciona?</strong><br>
+                Elige el número total de pelotas (n), el número de repeticiones (simulaciones), cuántas pelotas sacarás (m), la operación a realizar (suma, diferencia, multiplicación, división), la condición a evaluar y el valor a comparar. El juego simulará sacar pelotas sin reemplazo y evaluará la condición seleccionada, mostrando la probabilidad experimental y teórica de cada resultado.
+            </div>
+            <form id="formJarron">
+                <label for="n_pelotas">Número total de pelotas (n):</label>
+                <input type="number" id="n_pelotas" name="n_pelotas" min="1" max="50" required><br><br>
+                <label for="reps_jarron">Número de repeticiones:</label>
+                <input type="number" id="reps_jarron" name="reps_jarron" min="1" max="10000" required><br><br>
+                <label for="m_sacar">Número de pelotas a sacar (m):</label>
+                <input type="number" id="m_sacar" name="m_sacar" min="1" required><br><br>
+                <label for="operacion">Condición:</label>
+                <select id="operacion_jarron" name="operacion_jarron" required>
+                    <option value="suma">Suma</option>
+                    <option value="diferencia">Diferencia</option>
+                    <option value="multiplicacion">Multiplicación</option>
+                    <option value="division">División</option>
+                </select><br><br>
+                <label for="comparador">Comparador:</label>
+                <select id="comparador_jarron" name="comparador_jarron" required>
+                    <option value="igual">Igual a</option>
+                    <option value="mayor">Mayor a</option>
+                    <option value="menor">Menor a</option>
+                    <option value="mayor_igual">Mayor o igual a</option>
+                    <option value="menor_igual">Menor o igual a</option>
+                </select><br><br>
+                <label for="valorComparar">Valor a comparar:</label>
+                <input type="number" id="valorComparar_jarron" name="valorComparar_jarron" required><br><br>
+                <button type="submit">Simular</button>
+            </form>
+            <div id="resultadosJarron"></div>
+            <div id="graficaJarron-container" style="display:none;">
+                <canvas id="graficaJarron"></canvas>
+            </div>
+        </div>
+        <div id="minijuego-binomial" style="display:none;">
+            <h2>Minijuego: Distribución Binomial (Moneda)</h2>
+            <div class="explicacion">
+                <strong>¿Cómo funciona?</strong><br>
+                Se lanzará una moneda 12 veces en cada repetición. El objetivo es calcular la probabilidad de obtener exactamente 5 caras en los 12 lanzamientos. Se muestra la probabilidad experimental y la teórica.
+            </div>
+            <form id="formBinomial">
+                <label for="reps_binomial">Número de repeticiones (simulaciones):</label>
+                <input type="number" id="reps_binomial" name="reps_binomial" min="1" max="10000" required>
+                <button type="submit">Simular</button>
+            </form>
+            <div id="resultadosBinomial"></div>
+            <div id="graficaBinomial-container" style="display:none;">
+                <canvas id="graficaBinomial"></canvas>
+            </div>
+        </div>
+        <div id="minijuego-bernoulli" style="display:none;">
+            <h2>Minijuego: Distribución Bernoulli (Lanzamiento de Dado)</h2>
+            <div class="explicacion">
+                <strong>¿Cómo funciona?</strong><br>
+                Este minijuego simula una distribución de Bernoulli utilizando el lanzamiento de un dado. 
+                Debes elegir un número objetivo entre 1 y 6 (éxito) y el número de repeticiones (lanzamientos). 
+                El sistema lanzará el dado la cantidad de veces indicada y contará cuántas veces salió tu número objetivo (éxitos) 
+                y cuántas veces no salió (fracasos). Al final, se mostrará la probabilidad experimental y teórica, 
+                junto con una gráfica que representa los resultados.
+            </div>
+            <form id="formBernoulli">
+                <label for="numeroObjetivo">Número objetivo (1-6):</label>
+                <input type="number" id="numeroObjetivo" name="numeroObjetivo" min="1" max="6" required><br><br>
+                <label for="reps_bernoulli">Número de repeticiones:</label>
+                <input type="number" id="reps_bernoulli" name="reps_bernoulli" min="1" max="10000" required><br><br>
+                <button type="submit">Simular</button>
+            </form>
+            <div id="animacionBernoulli" style="display:none; text-align:center; margin-top:20px;">
+                <p>Simulando lanzamientos...</p>
+                <div class="spinner" style="margin: 0 auto; width: 50px; height: 50px; border: 5px solid #f3f3f3; border-top: 5px solid #4CAF50; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+            </div>
+            <div id="resultadosBernoulli"></div>
+            <div id="graficaBernoulli-container" style="display:none;">
+                <canvas id="graficaBernoulli"></canvas>
+            </div>
+        </div>
+        <div id="minijuego-exponencial" style="display:none;">
+            <h2>Minijuego: Tiempo de Espera (Distribución Exponencial)</h2>
+            <div class="explicacion">
+                <strong>¿Cómo funciona?</strong><br>
+                Este minijuego simula el tiempo que un cliente espera en una fila hasta ser atendido, siguiendo una distribución exponencial. 
+                El parámetro λ (lambda) representa la tasa de llegada de los clientes, y afecta directamente el tiempo promedio de espera. 
+                Tú debes ingresar un valor para λ y realizar una estimación del tiempo de espera. 
+                El sistema generará un tiempo de espera aleatorio basado en la distribución exponencial. 
+                Obtendrás puntos según la proximidad de tu estimación al tiempo real. 
+                Además, se mostrará una gráfica que incluye la función de densidad de probabilidad (PDF) de la distribución exponencial.
+            </div>
+            <form id="formExponencial">
+                <label for="lambda">Parámetro λ (lambda):</label>
+                <input type="number" id="lambda" name="lambda" min="0.1" step="0.1" required><br><br>
+                <label for="estimacion">Tu estimación del tiempo de espera:</label>
+                <input type="number" id="estimacion" name="estimacion" min="0" step="0.01" required><br><br>
+                <button type="submit">Simular</button>
+            </form>
+            <div id="resultadosExponencial"></div>
+            <div id="graficaExponencial-container" style="display:none;">
+                <canvas id="graficaExponencial"></canvas>
+            </div>
+        </div>
+        <div id="minijuego-poisson" style="display:none;">
+            <h2>Minijuego: Eventos Aleatorios (Distribución de Poisson)</h2>
+            <div class="explicacion">
+                <strong>¿Cómo funciona?</strong><br>
+                Este minijuego simula la llegada de eventos (como llamadas telefónicas) en un intervalo de tiempo fijo, siguiendo una distribución de Poisson. 
+                El parámetro λ (lambda) representa la tasa promedio de eventos por intervalo. 
+                Tú debes ingresar un valor para λ y realizar una estimación de cuántos eventos ocurrirán en el próximo intervalo. 
+                El sistema generará un número aleatorio de eventos basado en la distribución de Poisson. 
+                Obtendrás puntos según la precisión de tu estimación.
+            </div>
+            <form id="formPoisson">
+                <label for="lambdaPoisson">Parámetro λ (lambda):</label>
+                <input type="number" id="lambdaPoisson" name="lambdaPoisson" min="0.1" step="0.1" required><br><br>
+                <label for="estimacionPoisson">Tu estimación de eventos:</label>
+                <input type="number" id="estimacionPoisson" name="estimacionPoisson" min="0" step="1" required><br><br>
+                <button type="submit">Simular</button>
+            </form>
+            <div id="resultadosPoisson"></div>
+            <div id="graficaPoisson-container" style="display:none;">
+                <canvas id="graficaPoisson"></canvas>
+            </div>
+        </div>
+        <div id="minijuego-geometrica" style="display:none;">
+            <h2>Minijuego: Acierta y Gana (Distribución Geométrica)</h2>
+            <div class="explicacion">
+                <strong>¿Cómo funciona?</strong><br>
+                Este minijuego simula un juego donde el jugador lanza un dado hasta que obtiene un número específico, siguiendo una distribución geométrica. 
+                Tú debes elegir un número del 1 al 6. El sistema lanzará dados hasta que aparezca el número elegido. 
+                Se contará cuántos lanzamientos fueron necesarios para obtener el número. 
+                Obtendrás puntos basados en el número de lanzamientos: menos lanzamientos, más puntos.
+            </div>
+            <form id="formGeometrica">
+                <label for="numeroGeometrica">Número objetivo (1-6):</label>
+                <input type="number" id="numeroGeometrica" name="numeroGeometrica" min="1" max="6" required><br><br>
+                <button type="submit">Simular</button>
+            </form>
+            <div id="resultadosGeometrica"></div>
+            <div id="graficaGeometrica-container" style="display:none;">
+                <canvas id="graficaGeometrica"></canvas>
+            </div>
+        </div>
+        <div id="minijuego-gaussiana" style="display:none;">
+            <h2>Minijuego: La Máquina de Galton (Distribución Gaussiana)</h2>
+            <div class="explicacion">
+                <strong>¿Cómo funciona?</strong><br>
+                Este minijuego simula el proceso de caída de bolas en una máquina de Galton, que ilustra la distribución normal. 
+                Ajusta la inclinación de la máquina y el número de bolas a lanzar. Las bolas caerán y se distribuirán en diferentes compartimentos, formando una curva de campana. 
+                Al final, se muestra la distribución de las bolas y se compara con la distribución normal teórica. 
+                Obtendrás puntos por la precisión en la predicción de cuántas bolas caerán en cada compartimento.
+            </div>
+            <form id="formGaussiana">
+                <label for="bolasGaussiana">Número de bolas a lanzar:</label>
+                <input type="number" id="bolasGaussiana" name="bolasGaussiana" min="10" max="1000" required><br><br>
+                <label for="compartimentosGaussiana">Número de compartimentos:</label>
+                <input type="number" id="compartimentosGaussiana" name="compartimentosGaussiana" min="5" max="20" required><br><br>
+                <button type="submit">Simular</button>
+            </form>
+            <div id="resultadosGaussiana"></div>
+            <div id="graficaGaussiana-container" style="display:none;">
+                <canvas id="graficaGaussiana"></canvas>
+            </div>
+        </div>
+        <div id="minijuego-gamma" style="display:none;">
+            <h2>Minijuego: El Cultivo Perfecto (Distribución Gamma)</h2>
+            <div class="explicacion">
+                <strong>¿Cómo funciona?</strong><br>
+                Este minijuego simula el tiempo hasta la cosecha de un cultivo, siguiendo una distribución Gamma. 
+                Ajusta los parámetros de forma (<b>k</b>) y escala (<b>θ</b>) utilizando los controles deslizantes. 
+                El sistema generará un tiempo aleatorio basado en la distribución Gamma. 
+                Obtendrás puntos según la proximidad de tu estimación al tiempo real.
+                <br><br>
+                <strong>Parámetros:</strong>
+                <ul>
+                    <li><b>Forma (k):</b> Representa el número de eventos acumulativos que deben ocurrir. Por ejemplo, si <b>k = 3</b>, el tiempo modelado corresponde al tiempo hasta que ocurran 3 eventos.</li>
+                    <li><b>Escala (θ):</b> Representa el tiempo promedio entre eventos. Por ejemplo, si <b>θ = 2</b>, cada evento ocurre en promedio cada 2 unidades de tiempo.</li>
+                </ul>
+                <strong>Relación:</strong> El tiempo total hasta que ocurran <b>k</b> eventos sigue una distribución Gamma con estos parámetros.
+            </div>
+            <form id="formGamma">
+                <label for="formaGamma">Forma (k):</label>
+                <input type="range" id="formaGamma" name="formaGamma" min="1" max="10" step="1" value="5" oninput="document.getElementById('formaGammaValue').textContent = this.value">
+                <span id="formaGammaValue">5</span><br><br>
+                <label for="escalaGamma">Escala (θ):</label>
+                <input type="range" id="escalaGamma" name="escalaGamma" min="0.5" max="5" step="0.1" value="2" oninput="document.getElementById('escalaGammaValue').textContent = this.value">
+                <span id="escalaGammaValue">2</span><br><br>
+                <label for="estimacionGamma">Tu estimación del tiempo óptimo de cosecha:</label>
+                <input type="number" id="estimacionGamma" name="estimacionGamma" min="0" step="0.1" required><br><br>
+                <button type="submit">Simular</button>
+            </form>
+            <div id="resultadosGamma"></div>
+            <div id="graficaGamma-container" style="display:none;">
+                <canvas id="graficaGamma"></canvas>
+            </div>
+        </div>
+    </div>
+    <script src="minijuego_numeros.js"></script>
+    <script>
+        // Mostrar la sección del minijuego de Bernoulli si se selecciona
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('dist') === 'bernoulli') {
+            document.getElementById('minijuego-bernoulli').style.display = 'block';
+        }
+
+        // Acción del botón "Simular" para el minijuego de Bernoulli
+        document.getElementById('formBernoulli').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const numeroObjetivo = parseInt(document.getElementById('numeroObjetivo').value);
+            const repeticiones = parseInt(document.getElementById('reps_bernoulli').value);
+
+            if (isNaN(numeroObjetivo) || isNaN(repeticiones) || numeroObjetivo < 1 || numeroObjetivo > 6 || repeticiones < 1) {
+                alert('Por favor, ingresa valores válidos.');
+                return;
+            }
+
+            // Mostrar animación
+            const animacion = document.getElementById('animacionBernoulli');
+            animacion.style.display = 'block';
+
+            setTimeout(() => {
+                let exitos = 0;
+
+                for (let i = 0; i < repeticiones; i++) {
+                    const lanzamiento = Math.floor(Math.random() * 6) + 1;
+                    if (lanzamiento === numeroObjetivo) {
+                        exitos++;
+                    }
+                }
+
+                const probabilidadExperimental = (exitos / repeticiones).toFixed(4);
+                const probabilidadTeorica = (1 / 6).toFixed(4);
+
+                document.getElementById('resultadosBernoulli').innerHTML = `
+                    <p><strong>Resultados:</strong></p>
+                    <p>Éxitos (1): ${exitos}</p>
+                    <p>Fracasos (0): ${repeticiones - exitos}</p>
+                    <p>Probabilidad Experimental: ${probabilidadExperimental}</p>
+                    <p>Probabilidad Teórica: ${probabilidadTeorica}</p>
+                `;
+
+                // Ocultar animación
+                animacion.style.display = 'none';
+
+                // Mostrar gráfica de la distribución de Bernoulli
+                const ctx = document.getElementById('graficaBernoulli').getContext('2d');
+                document.getElementById('graficaBernoulli-container').style.display = 'block';
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Fracaso (0)', 'Éxito (1)'],
+                        datasets: [{
+                            label: 'Frecuencia',
+                            data: [repeticiones - exitos, exitos],
+                            backgroundColor: ['#F44336', '#4CAF50']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: { enabled: true }
+                        },
+                        scales: {
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Resultado'
+                                }
+                            },
+                            y: {
+                                title: {
+                                    display: true,
+                                    text: 'Frecuencia'
+                                },
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            }, 1000); // Simulación tarda 1 segundo para mostrar la animación
+        });
+
+        // Mostrar la sección del minijuego de la distribución exponencial si se selecciona
+        if (urlParams.get('dist') === 'exponencial') {
+            document.getElementById('minijuego-exponencial').style.display = 'block';
+        }
+
+        let chartExponencialInstance = null; // Track the chart instance
+
+        // Acción del botón "Simular" para el minijuego de la distribución exponencial
+        document.getElementById('formExponencial').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const lambda = parseFloat(document.getElementById('lambda').value);
+            const estimacion = parseFloat(document.getElementById('estimacion').value);
+
+            if (isNaN(lambda) || lambda <= 0 || isNaN(estimacion) || estimacion < 0) {
+                alert('Por favor, ingresa valores válidos.');
+                return;
+            }
+
+            // Generar tiempo de espera aleatorio usando la función inversa de la distribución exponencial
+            const tiempoReal = -Math.log(Math.random()) / lambda;
+            const tiempoPromedio = 1 / lambda;
+
+            // Calcular puntuación basada en la proximidad de la estimación al tiempo real
+            const diferencia = Math.abs(tiempoReal - estimacion);
+            const puntuacion = Math.max(0, 100 - Math.round(diferencia * 100));
+
+            // Mostrar resultados
+            document.getElementById('resultadosExponencial').innerHTML = `
+                <p><strong>Resultados:</strong></p>
+                <p>Tiempo real de espera: ${tiempoReal.toFixed(2)} segundos</p>
+                <p>Tu estimación: ${estimacion.toFixed(2)} segundos</p>
+                <p>Tiempo promedio esperado: ${tiempoPromedio.toFixed(2)} segundos</p>
+                <p>Diferencia: ${diferencia.toFixed(2)} segundos</p>
+                <p>Puntuación: ${puntuacion} puntos</p>
+            `;
+
+            // Generar datos para la curva de la PDF
+            const maxX = Math.max(tiempoReal, estimacion, tiempoPromedio) * 1.5;
+            const step = maxX / 100;
+            const pdfData = Array.from({ length: 101 }, (_, i) => {
+                const x = i * step;
+                return { x, y: lambda * Math.exp(-lambda * x) };
+            });
+
+            // Destruir la instancia anterior de la gráfica si existe
+            if (chartExponencialInstance) {
+                chartExponencialInstance.destroy();
+            }
+
+            // Mostrar gráfica
+            const ctx = document.getElementById('graficaExponencial').getContext('2d');
+            document.getElementById('graficaExponencial-container').style.display = 'block';
+            chartExponencialInstance = new Chart(ctx, {
+                type: 'scatter',
+                data: {
+                    datasets: [
+                        {
+                            label: 'PDF de la Distribución Exponencial',
+                            data: pdfData,
+                            borderColor: '#FF5722',
+                            backgroundColor: 'rgba(255, 87, 34, 0.2)',
+                            type: 'line',
+                            fill: true,
+                            tension: 0.4
+                        },
+                        {
+                            label: 'Estimación',
+                            data: [{ x: estimacion, y: lambda * Math.exp(-lambda * estimacion) }],
+                            backgroundColor: '#2196F3',
+                            pointRadius: 6
+                        },
+                        {
+                            label: 'Tiempo Real',
+                            data: [{ x: tiempoReal, y: lambda * Math.exp(-lambda * tiempoReal) }],
+                            backgroundColor: '#4CAF50',
+                            pointRadius: 6
+                        },
+                        {
+                            label: 'Promedio Esperado',
+                            data: [{ x: tiempoPromedio, y: lambda * Math.exp(-lambda * tiempoPromedio) }],
+                            backgroundColor: '#FFC107',
+                            pointRadius: 6
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: true },
+                        tooltip: { enabled: true }
+                    },
+                    scales: {
+                        x: {
+                            title: { display: true, text: 'Tiempo (segundos)' },
+                            beginAtZero: true
+                        },
+                        y: {
+                            title: { display: true, text: 'Densidad de Probabilidad' },
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        });
+
+        // Mostrar la sección del minijuego de la distribución de Poisson si se selecciona
+        if (urlParams.get('dist') === 'poisson') {
+            document.getElementById('minijuego-poisson').style.display = 'block';
+        }
+
+        let chartPoissonInstance = null; // Track the chart instance
+
+        // Acción del botón "Simular" para el minijuego de la distribución de Poisson
+        document.getElementById('formPoisson').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const lambda = parseFloat(document.getElementById('lambdaPoisson').value);
+            const estimacion = parseInt(document.getElementById('estimacionPoisson').value, 10);
+
+            if (isNaN(lambda) || lambda <= 0 || isNaN(estimacion) || estimacion < 0) {
+                alert('Por favor, ingresa valores válidos.');
+                return;
+            }
+
+            // Generar número de eventos aleatorios usando la distribución de Poisson
+            function generarPoisson(lambda) {
+                let L = Math.exp(-lambda);
+                let k = 0;
+                let p = 1;
+                do {
+                    k++;
+                    p *= Math.random();
+                } while (p > L);
+                return k - 1;
+            }
+
+            const eventosGenerados = generarPoisson(lambda);
+
+            // Calcular puntuación basada en la proximidad de la estimación al número de eventos generados
+            const diferencia = Math.abs(eventosGenerados - estimacion);
+            const puntuacion = Math.max(0, 100 - Math.round(diferencia * 10));
+
+            // Mostrar resultados
+            document.getElementById('resultadosPoisson').innerHTML = `
+                <p><strong>Resultados:</strong></p>
+                <p>Eventos generados: ${eventosGenerados}</p>
+                <p>Tu estimación: ${estimacion}</p>
+                <p>Diferencia: ${diferencia}</p>
+                <p>Puntuación: ${puntuacion} puntos</p>
+            `;
+
+            // Generar datos para la gráfica de Poisson
+            const maxEventos = Math.max(eventosGenerados, estimacion) + 5;
+            const poissonData = Array.from({ length: maxEventos + 1 }, (_, k) => {
+                return {
+                    x: k,
+                    y: (Math.pow(lambda, k) * Math.exp(-lambda)) / factorial(k)
+                };
+            });
+
+            // Destruir la instancia anterior de la gráfica si existe
+            if (chartPoissonInstance) {
+                chartPoissonInstance.destroy();
+            }
+
+            // Mostrar gráfica
+            const ctx = document.getElementById('graficaPoisson').getContext('2d');
+            document.getElementById('graficaPoisson-container').style.display = 'block';
+            chartPoissonInstance = new Chart(ctx, {
+                type: 'scatter',
+                data: {
+                    datasets: [
+                        {
+                            label: 'Distribución de Poisson (PDF)',
+                            data: poissonData,
+                            borderColor: '#FF5722',
+                            backgroundColor: 'rgba(255, 87, 34, 0.2)',
+                            type: 'line',
+                            fill: true,
+                            tension: 0.4
+                        },
+                        {
+                            label: 'Estimación',
+                            data: [{ x: estimacion, y: poissonData[estimacion]?.y || 0 }],
+                            backgroundColor: '#2196F3',
+                            pointRadius: 6
+                        },
+                        {
+                            label: 'Eventos Generados',
+                            data: [{ x: eventosGenerados, y: poissonData[eventosGenerados]?.y || 0 }],
+                            backgroundColor: '#4CAF50',
+                            pointRadius: 6
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: true },
+                        tooltip: { enabled: true }
+                    },
+                    scales: {
+                        x: {
+                            title: { display: true, text: 'Número de Eventos' },
+                            beginAtZero: true
+                        },
+                        y: {
+                            title: { display: true, text: 'Probabilidad' },
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // Función para calcular factorial
+            function factorial(n) {
+                if (n === 0 || n === 1) return 1;
+                let result = 1;
+                for (let i = 2; i <= n; i++) {
+                    result *= i;
+                }
+                return result;
+            }
+        });
+
+        // Mostrar la sección del minijuego de la distribución geométrica si se selecciona
+        if (urlParams.get('dist') === 'geometrica') {
+            document.getElementById('minijuego-geometrica').style.display = 'block';
+        }
+
+        let chartGeometricaInstance = null; // Track the chart instance
+
+        // Acción del botón "Simular" para el minijuego de la distribución geométrica
+        document.getElementById('formGeometrica').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const numeroObjetivo = parseInt(document.getElementById('numeroGeometrica').value, 10);
+
+            if (isNaN(numeroObjetivo) || numeroObjetivo < 1 || numeroObjetivo > 6) {
+                alert('Por favor, ingresa un número válido entre 1 y 6.');
+                return;
+            }
+
+            // Simular lanzamientos hasta obtener el número objetivo
+            let lanzamientos = 0;
+            let resultado;
+            do {
+                resultado = Math.floor(Math.random() * 6) + 1;
+                lanzamientos++;
+            } while (resultado !== numeroObjetivo);
+
+            // Calcular puntuación basada en el número de lanzamientos
+            const puntuacion = Math.max(0, 100 - lanzamientos * 10);
+
+            // Mostrar resultados
+            document.getElementById('resultadosGeometrica').innerHTML = `
+                <p><strong>Resultados:</strong></p>
+                <p>Número objetivo: ${numeroObjetivo}</p>
+                <p>Número de lanzamientos necesarios: ${lanzamientos}</p>
+                <p>Puntuación: ${puntuacion} puntos</p>
+            `;
+
+            // Generar datos para la gráfica de la distribución geométrica
+            const maxLanzamientos = Math.min(20, lanzamientos + 10);
+            const probabilidad = 1 / 6;
+            const geometricaData = Array.from({ length: maxLanzamientos }, (_, k) => {
+                return {
+                    x: k + 1,
+                    y: Math.pow(1 - probabilidad, k) * probabilidad
+                };
+            });
+
+            // Destruir la instancia anterior de la gráfica si existe
+            if (chartGeometricaInstance) {
+                chartGeometricaInstance.destroy();
+            }
+
+            // Mostrar gráfica
+            const ctx = document.getElementById('graficaGeometrica').getContext('2d');
+            document.getElementById('graficaGeometrica-container').style.display = 'block';
+            chartGeometricaInstance = new Chart(ctx, {
+                type: 'scatter',
+                data: {
+                    datasets: [
+                        {
+                            label: 'Distribución Geométrica (PDF)',
+                            data: geometricaData,
+                            borderColor: '#FF5722',
+                            backgroundColor: 'rgba(255, 87, 34, 0.2)',
+                            type: 'line',
+                            fill: true,
+                            tension: 0.4
+                        },
+                        {
+                            label: 'Lanzamientos Necesarios',
+                            data: [{ x: lanzamientos, y: geometricaData[lanzamientos - 1]?.y || 0 }],
+                            backgroundColor: '#4CAF50',
+                            pointRadius: 6
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: true },
+                        tooltip: { enabled: true }
+                    },
+                    scales: {
+                        x: {
+                            title: { display: true, text: 'Número de Lanzamientos' },
+                            beginAtZero: true
+                        },
+                        y: {
+                            title: { display: true, text: 'Probabilidad' },
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        });
+
+        // Mostrar la sección del minijuego de la distribución gaussiana si se selecciona
+        if (urlParams.get('dist') === 'gaussiana') {
+            document.getElementById('minijuego-gaussiana').style.display = 'block';
+        }
+
+        let chartGaussianaInstance = null; // Track the chart instance
+
+        // Acción del botón "Simular" para el minijuego de la distribución gaussiana
+        document.getElementById('formGaussiana').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const bolas = parseInt(document.getElementById('bolasGaussiana').value, 10);
+            const compartimentos = parseInt(document.getElementById('compartimentosGaussiana').value, 10);
+
+            if (isNaN(bolas) || bolas < 10 || isNaN(compartimentos) || compartimentos < 5) {
+                alert('Por favor, ingresa valores válidos.');
+                return;
+            }
+
+            // Simular caída de bolas en la máquina de Galton
+            const resultados = Array(compartimentos).fill(0);
+            for (let i = 0; i < bolas; i++) {
+                let posicion = 0;
+                for (let j = 0; j < compartimentos - 1; j++) {
+                    if (Math.random() < 0.5) {
+                        posicion++;
+                    }
+                }
+                resultados[posicion]++;
+            }
+
+            // Calcular distribución normal teórica
+            const media = (compartimentos - 1) / 2;
+            const desviacion = Math.sqrt((compartimentos - 1) / 4);
+            const normalTeorica = Array.from({ length: compartimentos }, (_, x) => {
+                const z = (x - media) / desviacion;
+                return (1 / (desviacion * Math.sqrt(2 * Math.PI))) * Math.exp(-0.5 * z * z);
+            });
+
+            // Mostrar resultados
+            document.getElementById('resultadosGaussiana').innerHTML = `
+                <p><strong>Resultados:</strong></p>
+                <p>Número de bolas lanzadas: ${bolas}</p>
+                <p>Distribución de las bolas:</p>
+                <ul>
+                    ${resultados.map((r, i) => `<li>Compartimento ${i + 1}: ${r} bolas</li>`).join('')}
+                </ul>
+            `;
+
+            // Destruir la instancia anterior de la gráfica si existe
+            if (chartGaussianaInstance) {
+                chartGaussianaInstance.destroy();
+            }
+
+            // Mostrar gráfica
+            const ctx = document.getElementById('graficaGaussiana').getContext('2d');
+            document.getElementById('graficaGaussiana-container').style.display = 'block';
+            chartGaussianaInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: Array.from({ length: compartimentos }, (_, i) => `Compartimento ${i + 1}`),
+                    datasets: [
+                        {
+                            label: 'Distribución Experimental',
+                            data: resultados.map(r => r / bolas),
+                            backgroundColor: '#2196F3'
+                        },
+                        {
+                            label: 'Distribución Normal Teórica',
+                            data: normalTeorica,
+                            backgroundColor: '#FFC107'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: true },
+                        tooltip: { enabled: true }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: { display: true, text: 'Probabilidad' }
+                        },
+                        x: {
+                            title: { display: true, text: 'Compartimentos' }
+                        }
+                    }
+                }
+            });
+        });
+
+        // Mostrar la sección del minijuego de la distribución binomial si se selecciona
+        if (urlParams.get('dist') === 'binomial') {
+            const formBinomial = document.getElementById('formBinomial');
+            if (formBinomial) {
+                formBinomial.addEventListener('submit', function (e) {
+                    e.preventDefault();
+
+                    const n = 12; // Número de lanzamientos
+                    const k = 5;  // Número de caras buscadas
+                    const p = 0.5; // Probabilidad de obtener cara
+                    const reps = parseInt(document.getElementById('reps_binomial').value, 10);
+
+                    if (isNaN(reps) || reps <= 0) {
+                        alert('Por favor, ingresa un número válido de repeticiones.');
+                        return;
+                    }
+
+                    let conteo = Array(n + 1).fill(0);
+                    for (let i = 0; i < reps; i++) {
+                        let caras = 0;
+                        for (let j = 0; j < n; j++) {
+                            if (Math.random() < p) caras++;
+                        }
+                        conteo[caras]++;
+                    }
+
+                    // Probabilidad experimental de obtener k caras
+                    const probExp = conteo[k] / reps;
+
+                    // Probabilidad teórica binomial
+                    function binomial(n, k, p) {
+                        function factorial(x) {
+                            let f = 1;
+                            for (let i = 2; i <= x; i++) f *= i;
+                            return f;
+                        }
+                        return (factorial(n) / (factorial(k) * factorial(n - k))) * Math.pow(p, k) * Math.pow(1 - p, n - k);
+                    }
+                    const probTeo = binomial(n, k, p);
+
+                    // Mostrar resultados
+                    document.getElementById('resultadosBinomial').innerHTML = `
+                        <p>Probabilidad experimental de obtener exactamente <b>${k}</b> caras en <b>${n}</b> lanzamientos: <b>${probExp.toFixed(4)}</b></p>
+                        <p>Probabilidad teórica: <b>${probTeo.toFixed(4)}</b></p>
+                        <ul>
+                            ${conteo.map((c, i) => `<li>${i} caras: ${c} veces</li>`).join('')}
+                        </ul>
+                        <button class="reiniciar-btn" onclick="location.reload()">Reiniciar</button>
+                    `;
+
+                    // Mostrar gráfica
+                    document.getElementById('graficaBinomial-container').style.display = 'block';
+                    const labels = Array.from({ length: n + 1 }, (_, i) => `${i} caras`);
+                    const dataExperimental = conteo.map(c => c / reps);
+                    const dataTeorica = labels.map((_, i) => binomial(n, i, p));
+
+                    if (window.chartBinomial) window.chartBinomial.destroy();
+                    const ctx = document.getElementById('graficaBinomial').getContext('2d');
+                    window.chartBinomial = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: labels,
+                            datasets: [
+                                {
+                                    label: 'Probabilidad Experimental',
+                                    data: dataExperimental,
+                                    backgroundColor: '#2196F3'
+                                },
+                                {
+                                    label: 'Probabilidad Teórica',
+                                    data: dataTeorica,
+                                    backgroundColor: '#ff9800'
+                                }
+                            ]
+                        },
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                legend: { display: true },
+                                tooltip: { enabled: true }
+                            },
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    max: 1,
+                                    title: { display: true, text: 'Probabilidad' }
+                                }
+                            }
+                        }
+                    });
+                });
+            } else {
+                console.error('El formulario para la distribución binomial no se encontró.');
+            }
+        }
+
+        // Mostrar la sección del minijuego de la distribución Gamma si se selecciona
+        if (urlParams.get('dist') === 'gamma') {
+            document.getElementById('minijuego-gamma').style.display = 'block';
+        }
+
+        let chartGammaInstance = null; // Track the chart instance
+
+        // Acción del botón "Simular" para el minijuego de la distribución Gamma
+        document.getElementById('formGamma').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const k = parseInt(document.getElementById('formaGamma').value, 10);
+            const theta = parseFloat(document.getElementById('escalaGamma').value);
+            const estimacion = parseFloat(document.getElementById('estimacionGamma').value);
+
+            if (isNaN(estimacion) || estimacion < 0) {
+                alert('Por favor, ingresa una estimación válida.');
+                return;
+            }
+
+            // Generar tiempo de cosecha aleatorio usando la distribución Gamma
+            function generarGamma(k, theta) {
+                let sum = 0;
+                for (let i = 0; i < k; i++) {
+                    sum += -Math.log(Math.random());
+                }
+                return sum * theta;
+            }
+
+            const tiempoReal = generarGamma(k, theta);
+
+            // Calcular puntuación
+            const diferencia = Math.abs(tiempoReal - estimacion);
+            const puntuacion = Math.max(0, 100 - Math.round(diferencia * 10));
+
+            // Mostrar resultados
+            document.getElementById('resultadosGamma').innerHTML = `
+                <p><strong>Resultados:</strong></p>
+                <p>Parámetros de la distribución Gamma: k = ${k}, θ = ${theta.toFixed(2)}</p>
+                <p>Tiempo real de cosecha: ${tiempoReal.toFixed(2)} unidades de tiempo</p>
+                <p>Tu estimación: ${estimacion.toFixed(2)} unidades de tiempo</p>
+                <p>Diferencia: ${diferencia.toFixed(2)} unidades de tiempo</p>
+                <p>Puntuación: ${puntuacion} puntos</p>
+            `;
+
+            // Generar datos para la gráfica de la distribución Gamma
+            const maxX = Math.max(tiempoReal, estimacion) * 1.5;
+            const step = maxX / 100;
+            const gammaData = Array.from({ length: 101 }, (_, i) => {
+                const x = i * step;
+                const y = (Math.pow(x, k - 1) * Math.exp(-x / theta)) / (Math.pow(theta, k) * factorial(k - 1));
+                return { x, y };
+            });
+
+            // Destruir la instancia anterior de la gráfica si existe
+            if (window.chartGammaInstance) {
+                window.chartGammaInstance.destroy();
+            }
+
+            // Mostrar gráfica
+            const ctx = document.getElementById('graficaGamma').getContext('2d');
+            document.getElementById('graficaGamma-container').style.display = 'block';
+            window.chartGammaInstance = new Chart(ctx, {
+                type: 'scatter',
+                data: {
+                    datasets: [
+                        {
+                            label: 'Distribución Gamma (PDF)',
+                            data: gammaData,
+                            borderColor: '#FF5722',
+                            backgroundColor: 'rgba(255, 87, 34, 0.2)',
+                            type: 'line',
+                            fill: true,
+                            tension: 0.4
+                        },
+                        {
+                            label: 'Estimación',
+                            data: [{ x: estimacion, y: gammaData[Math.floor(estimacion / step)]?.y || 0 }],
+                            backgroundColor: '#2196F3',
+                            pointRadius: 6
+                        },
+                        {
+                            label: 'Tiempo Real',
+                            data: [{ x: tiempoReal, y: gammaData[Math.floor(tiempoReal / step)]?.y || 0 }],
+                            backgroundColor: '#4CAF50',
+                            pointRadius: 6
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: true },
+                        tooltip: { enabled: true }
+                    },
+                    scales: {
+                        x: {
+                            title: { display: true, text: 'Tiempo (unidades)' },
+                            beginAtZero: true
+                        },
+                        y: {
+                            title: { display: true, text: 'Densidad de Probabilidad' },
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // Función para calcular factorial
+            function factorial(n) {
+                if (n === 0 || n === 1) return 1;
+                let result = 1;
+                for (let i = 2; i <= n; i++) {
+                    result *= i;
+                }
+                return result;
+            }
+        });
+    </script>
+    <style>
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</body>
+</html>
